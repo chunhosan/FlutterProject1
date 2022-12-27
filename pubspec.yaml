@@ -68,6 +68,23 @@ flutter:
   assets:
    - assets/logo.png
    - assets/logo2.png
+   - assets/logo3.png
+   - assets/alarm.png
+   - assets/search.png
+   - assets/2km.png
+   - assets/profile1.png
+   - assets/profile2.png
+   - assets/profile3.png
+   - assets/profile4.png
+   - assets/profile5.png
+   - assets/coolicon1.png
+   - assets/coolicon2.png
+   - assets/coolicon3.png
+   - assets/coolicon4.png
+   - assets/coolicon5.png
+   - assets/coolicon6.png
+   - assets/coolicon7.png
+   - assets/coolicon8.png
    - assets/#image (1).png
    - assets/#image (2).png
    - assets/#image (3).png

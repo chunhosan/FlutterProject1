@@ -1,14 +1,39 @@
+import 'dart:core';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 
 class FoodScreen extends StatefulWidget {
-
   @override
   _FoodScreenState createState() => _FoodScreenState();
 }
 
 class _FoodScreenState extends State<FoodScreen> {
+  static List<String> nowpimage = [
+    'assets/profile1.png',
+    'assets/profile2.png',
+    'assets/profile3.png',
+    'assets/profile4.png',
+    'assets/profile5.png',
+  ];
+  static List<String> nowpname = ['박영재','윤승민','임새롬','김겨울','고은'];
+  static List<String> nowimage = [
+    'assets/#image (6).png',
+    'assets/#image (7).png',
+    'assets/#image (8).png',
+    'assets/#image (9).png',
+    'assets/#image (10).png',
+  ];
+  static List<String> nowtitle = ['호수 매운탕','고향산장','맑음','부에노','아우내엄나무순대'];
+  static List<String> nowcontent = ['분위기가 좋았어요','맛있었어요','맛집 추천합니다','GOOD!','다음에 또 올게요!'];
+  final List<FoodDataModel> Nowdata = List.generate(
+      nowpname.length,
+          (index)
+      => FoodDataModel('${nowpimage[index]}','${nowpname[index]}','${nowimage[index]}','${nowtitle[index]}',
+          '${nowcontent[index]}','${nowpname[index]} Description...'));
+
+
   final List<Map<String,dynamic>> gridMap =[
     {
       "title": "1   호수 매운탕",
@@ -162,45 +187,10 @@ class _FoodScreenState extends State<FoodScreen> {
     },
   ];
 
-  List<String> posts = [
-    'assets/#image (1).png',
-    'assets/#image (2).png',
-    'assets/#image (3).png',
-    'assets/#image (4).png',
-    'assets/#image (5).png',
-    'assets/#image (6).png',
-    'assets/#image (7).png',
-    'assets/#image (8).png',
-    'assets/#image (9).png',
-    'assets/#image (10).png',
-    'assets/#image (11).png',
-    'assets/#image (12).png',
-    'assets/#image (13).png',
-    'assets/#image (14).png',
-    'assets/#image (15).png',
-    'assets/#image (16).png',
-    'assets/#image (17).png',
-    'assets/#image (18).png',
-    'assets/#image (19).png',
-    'assets/#image (20).png',
-    'assets/#image (21).png',
-    'assets/#image (22).png',
-    'assets/#image (23).png',
-    'assets/#image (24).png',
-    'assets/#image (25).png',
-    'assets/#image (26).png',
-    'assets/#image (27).png',
-    'assets/#image (28).png',
-    'assets/#image (29).png',
-    'assets/#image (30).png',
-    'assets/#image (31).png',
-    'assets/#image (32).png',
-    'assets/#image (33).png',
-    'assets/#image (34).png',
-  ];
-    @override
+  @override
     Widget build(BuildContext context) {
       return Scaffold(
+        backgroundColor: Color(0xffecf3fc),
         body: DefaultTabController(
           length: 2,
           child: NestedScrollView(
@@ -208,12 +198,12 @@ class _FoodScreenState extends State<FoodScreen> {
             physics: NeverScrollableScrollPhysics(),
             headerSliverBuilder: (BuildContext context,bool innerBoxIsScrolleed){
               return <Widget>[
-
                 SliverAppBar(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Color(0xffecf3fc),
                   collapsedHeight: 100,
                   expandedHeight: 20,
                   pinned: true,
+                  floating: true,
                   elevation: 0.0,
                   flexibleSpace: ProfileView(),
                 ),
@@ -224,11 +214,17 @@ class _FoodScreenState extends State<FoodScreen> {
                           Tab(text: "BEST",),
                           Tab(text: "NOW",),
                         ],
-                        indicatorColor: Colors.blue,
+                        indicatorWeight: 3,
+                        indicatorColor: Colors.red,
                         unselectedLabelColor: Colors.grey,
-                        labelColor: Colors.black,
 
-                      )
+                        labelStyle: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20,
+                        ),
+                        labelColor: Colors.red,
+
+                      ),
                   ),
                   floating: false,
                   pinned: true,
@@ -237,21 +233,25 @@ class _FoodScreenState extends State<FoodScreen> {
               ];
             },
             body: TabBarView(
+
               children: [
                 GridView.builder(
                   physics:  NeverScrollableScrollPhysics(),
                   gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
+                  //그리드뷰 크기 비율
+                  childAspectRatio: 5/6,
                   //shrinkWrap: true,
+                    //여백
                   mainAxisSpacing:  20.0,
-                  crossAxisSpacing: 2.0,
+                  crossAxisSpacing: 15.0,
                 ),
                 itemCount: gridMap.length,
                 itemBuilder: (_, index){
                   return Container(
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(36.0),
-                      color: Color(0xfffafafa),
+                      borderRadius: BorderRadius.circular(30.0),
+                      color: Color(0xffecf3fc),
 
                     ),
                     child: Column(
@@ -270,7 +270,7 @@ class _FoodScreenState extends State<FoodScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.all(1.0),
+                            padding: EdgeInsets.all(5.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -290,24 +290,183 @@ class _FoodScreenState extends State<FoodScreen> {
                   );
                 }
               ),
+
                 //NOWPAGE 구현
-
               Scaffold(
-                body: Container(
-                  color: Colors.teal,
-                  child: Center(
-                      child: Text(
-                        'Tab2 Content',
-                        style: TextStyle(
-                          fontSize: 32,
-                          color: Colors.white,
-                          fontWeight: FontWeight.bold,
+                backgroundColor: Color(0xffecf3fc),
+                body: ListView.builder(
+                    itemCount: Nowdata.length,
+                    itemBuilder: (context,index){
+                      return Card(
+                        child: Stack(
+                          children: [
+                            Container(
+                                    height: 440.0,
+                                    //width: MediaQuery.of(context).size.width * 0.5 -65,
+                                    decoration: BoxDecoration(
+                                      color: Color(0xffecf3fc),
+                                      borderRadius: BorderRadius.circular(0.0),
+                                    ),
+                                  ),
+                            //NPIMAGE
+                            Positioned(
+                                top: 10,
+                                left: 10,
+                              child: InkWell(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: Image.asset(Nowdata[index].NPImage),
+                                  ),
+                                ),
+                                  onTap: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FoodDetail(foodDataModel: Nowdata[index],)));
+                                  }
+                              ),
+                            ),
+                            //NPNAME
+                            Positioned(
+                              top: 10,
+                              left: 70,
+                              child: InkWell(
+                                  child: Text(
+                                    Nowdata[index].NPName,
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 13,
+                                    ),
+                                  ),
+                                  onTap: (){
+                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FoodDetail(foodDataModel: Nowdata[index],)));
+                                  }
+                              ),
+                            ),
+                            //NIMAGE
+                            Positioned(
+                              top: 75,
+                              left: 10,
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(10),
+                                  child: Image.asset(Nowdata[index].NImage,
+                                    height: 250,
+                                    width: MediaQuery.of(context).size.width * 0.93,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                              ),
+                            ),
+                            //NTITLE
+                            Positioned(
+                              top: 330,
+                              left: 10,
+                              child: Text(
+                                Nowdata[index].NTitle,
+                                style: TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                            //NCONTENT
+                            Positioned(
+                              top: 360,
+                              left: 10,
+                              child: Text(
+                                Nowdata[index].NContent,
+                                style: TextStyle(
+                                  //fontWeight: FontWeight.bold,
+                                  fontSize: 13,
+                                ),
+                              ),
+                            ),
+                            //ICON
+                            Positioned(
+                              top: 400,
+                              left: 10,
+                              child: InkWell(
+                                  child: Image.asset('assets/coolicon6.png'),
+                                  /*onTap: (){
+                                    Navigator.of(context).push(),
+                                  }*/
+                              ),
+                            ),
+                            Positioned(
+                              top: 400,
+                              left: 40,
+                              child: InkWell(
+                                child: Image.asset('assets/coolicon1.png'),
+                                /*onTap: (){
+                                    Navigator.of(context).push(),
+                                  }*/
+                              ),
+                            ),
+                            Positioned(
+                              top: 398,
+                              left: 65,
+                              child: InkWell(
+                                child: Image.asset('assets/coolicon2.png'),
+                                /*onTap: (){
+                                    Navigator.of(context).push(),
+                                  }*/
+                              ),
+                            ),
+                            Positioned(
+                              top: 399,
+                              left: 120,
+                              child: InkWell(
+                                child: Image.asset('assets/coolicon3.png'),
+                                /*onTap: (){
+                                    Navigator.of(context).push(),
+                                  }*/
+                              ),
+                            ),
+                            Positioned(
+                              top: 400,
+                              left: 150,
+                              child: InkWell(
+                                child: Image.asset('assets/coolicon4.png'),
+                                /*onTap: (){
+                                    Navigator.of(context).push(),
+                                  }*/
+                              ),
+                            ),
+                            Positioned(
+                              top: 400,
+                              left: 180,
+                              child: InkWell(
+                                child: Image.asset('assets/coolicon5.png'),
+                                /*onTap: (){
+                                    Navigator.of(context).push(),
+                                  }*/
+                              ),
+                            ),
+                            Positioned(
+                              top: 335,
+                              left: 325,
+                              child: Image.asset('assets/coolicon7.png'),
+                              ),
+                            Positioned(
+                              top: 40,
+                              left: 360,
+                              child: Image.asset('assets/coolicon8.png'),
+                            ),
+                            Positioned(
+                              top: 25,
+                              left: 340,
+                              child: Text('8m ago',
+                                style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 10,
+                                ),),
+                              ),
+                          ],
                         ),
-                      )
-                  ),
-                ),
+                      );
+                    }),
               ),
-
               ],
             ),
           ),
@@ -315,6 +474,306 @@ class _FoodScreenState extends State<FoodScreen> {
       );
     }
   }
+  //1. NOW Page 리스트 클래스
+class FoodDataModel{
+  late final String NPImage,NPName,NImage,NTitle,NContent,desc;
+  FoodDataModel(this.NPImage, this.NPName, this.NImage, this.NTitle, this.NContent,this.desc);
+}
+//2. NOW Page 이미지 클릭 이벤트 클래스
+class FoodDetail extends StatelessWidget{
+  final FoodDataModel foodDataModel;
+  const FoodDetail({Key? key, required this.foodDataModel}):super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('프로필'),
+        centerTitle: true,
+        elevation: 0,
+        backgroundColor: Color(0xffB1B8C0),
+      ),
+      body: Container(
+        //height: double.maxFinite,
+        //width: double.maxFinite,
+        child: Stack(
+          children: [
+            Container(
+              height: 1000,
+              width: double.maxFinite,
+              decoration: BoxDecoration(
+                  color: Color(0xfffafafa),
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(20),
+                    bottomRight: Radius.circular(20),
+                  ),
+              ),
+            ),
+            Container(
+                height: 220,
+                width: double.maxFinite,
+                decoration: BoxDecoration(
+                    color: Color(0xffB1B8C0),
+                    borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(20),
+                      bottomRight: Radius.circular(20),
+                    )
+                ),
+              ),
+            //도형
+           /*Positioned(
+                top: 260,
+                left: 20,
+                child: Column(
+                  children: [
+                    Center(
+                      child: Container(
+                        height: 40,
+                        width: 150,
+                        decoration: BoxDecoration(
+                          border: Border.all(color: Color(0xffBDBDBD), width: 1),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Container(
+                          height: 80,
+                          width: 150,
+                          decoration: BoxDecoration(
+                            color: Color(0xffE8E8E8),
+                            borderRadius: BorderRadius.circular(30)
+                          ),
+                          
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+
+            ),*/
+            Positioned(
+              top: 15,
+              left: MediaQuery.of(context).size.width * 0.5 -65,
+              child: Column(
+                //crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: Colors.white, width: 3),
+                        borderRadius: BorderRadius.circular(60),
+                        ),
+
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(60),
+                        child: Image.asset(
+                          foodDataModel.NPImage,
+                          height: 130,
+                          width: 130,
+                        ),
+                      ),
+                    ),
+                     ),
+
+                  Text(foodDataModel.NPName,
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 20,
+                    ),),
+                  Text('설명',
+                    style: TextStyle(
+                      fontSize: 10,
+                    ),),
+                ],
+              ),
+            ),
+            //NIMAGE
+            Positioned(
+              top: 325,
+              left: 10,
+              child: Center(
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10),
+                  child: Image.asset(foodDataModel.NImage,
+                    height: 250,
+                    width: MediaQuery.of(context).size.width * 0.93,
+                    fit: BoxFit.cover,
+                  ),
+                ),
+              ),
+            ),
+            //NTITLE
+            Positioned(
+              top: 580,
+              left: 10,
+              child: Text(
+                foodDataModel.NTitle,
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+            //NCONTENT
+            Positioned(
+              top: 610,
+              left: 10,
+              child: Text(
+                foodDataModel.NContent,
+                style: TextStyle(
+                  //fontWeight: FontWeight.bold,
+                  fontSize: 13,
+                ),
+              ),
+            ),
+            //ICON
+            Positioned(
+              top: 650,
+              left: 10,
+              child: InkWell(
+                child: Image.asset('assets/coolicon6.png'),
+                /*onTap: (){
+                                      Navigator.of(context).push(),
+                                    }*/
+              ),
+            ),
+            Positioned(
+              top: 650,
+              left: 40,
+              child: InkWell(
+                child: Image.asset('assets/coolicon1.png'),
+                /*onTap: (){
+                                      Navigator.of(context).push(),
+                                    }*/
+              ),
+            ),
+            Positioned(
+              top: 648,
+              left: 65,
+              child: InkWell(
+                child: Image.asset('assets/coolicon2.png'),
+                /*onTap: (){
+                                      Navigator.of(context).push(),
+                                    }*/
+              ),
+            ),
+            Positioned(
+              top: 649,
+              left: 120,
+              child: InkWell(
+                child: Image.asset('assets/coolicon3.png'),
+                /*onTap: (){
+                                      Navigator.of(context).push(),
+                                    }*/
+              ),
+            ),
+            Positioned(
+              top: 650,
+              left: 150,
+              child: InkWell(
+                child: Image.asset('assets/coolicon4.png'),
+                /*onTap: (){
+                                      Navigator.of(context).push(),
+                                    }*/
+              ),
+            ),
+            Positioned(
+              top: 650,
+              left: 180,
+              child: InkWell(
+                child: Image.asset('assets/coolicon5.png'),
+                /*onTap: (){
+                                      Navigator.of(context).push(),
+                                    }*/
+              ),
+            ),
+            Positioned(
+              top: 585,
+              left: 325,
+              child: Image.asset('assets/coolicon7.png'),
+            ),
+            Positioned(
+              top: 290,
+              left: 360,
+              child: Image.asset('assets/coolicon8.png'),
+            ),
+            Positioned(
+              top: 275,
+              left: 340,
+              child: Text('8m ago',
+                style: TextStyle(
+                  color: Colors.grey,
+                  fontSize: 10,
+                ),),
+            ),
+            //프로필 카메라 구현
+            /*Positioned(
+              top: 180,
+              left: MediaQuery.of(context).size.width * 0.5 + 30,
+              child: Container(
+                height: 45,
+                width: 45,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(25),
+                  color: Color(0xffB1B8C0),
+                ),
+                child: Icon(
+                  Icons.camera_alt,
+                  color: Colors.white,
+                ),
+              ),
+              ),*/
+          ],
+        ),
+      ),
+    );
+  }
+}
+/*class NOWPageList extends StatelessWidget{
+   final String NPImage,NPName,NImage,NTitle,NContent,desc;
+   NOWPageList(this.NPImage, this.NPName, this.NImage, this.NTitle, this.NContent,this.desc);
+
+   static List<String> nowpimage = [
+     'assets/#image (1).png',
+     'assets/#image (2).png',
+     'assets/#image (3).png',
+     'assets/#image (4).png',
+     'assets/#image (5).png',
+   ];
+   static List<String> nowpname = ['사용자1','사용자2','사용자3','사용자4','사용자5'];
+
+   static List<String> nowimage = [
+     'assets/#image (1).png',
+     'assets/#image (2).png',
+     'assets/#image (3).png',
+     'assets/#image (4).png',
+     'assets/#image (5).png',
+   ];
+
+   static List<String> nowtitle = ['사용자1','사용자2','사용자3','사용자4','사용자5'];
+   static List<String> nowcontent = ['사용자1','사용자2','사용자3','사용자4','사용자5'];
+
+
+   final List<NOWPageList> Nowdata = List.generate(
+       nowpname.length,
+           (index)
+       => NOWPageList('${nowpimage[index]}','${nowpname[index]}','${nowimage[index]}','${nowtitle[index]}',
+           '${nowcontent[index]}','${nowpname[index]} Description...'));
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: ListView.builder(
+        itemCount: Nowdata.length,
+        itemBuilder: (context,index){
+          return Card(
+            child: ListTile(
+              title: Text(Nowdata[index].NPImage),
+            ),
+          );
+        }),
+
+    );
+  }}*/
+
+  //delegate
   class MyDelegate extends SliverPersistentHeaderDelegate{
   MyDelegate(this.tabBar);
   final TabBar tabBar;
@@ -323,7 +782,7 @@ class _FoodScreenState extends State<FoodScreen> {
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
   return Container(
     height: 100,
-    color: Colors.white,
+    color: Color(0xffecf3fc),
     child: tabBar,
   );
   }
@@ -345,69 +804,106 @@ class ProfileView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
-        backgroundColor: Colors.white,
+        backgroundColor: Color(0xffecf3fc),
         body: Padding(
           padding: EdgeInsets.all(12),
-          child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 2.0,
-              ),
-              SizedBox(
-                height: 30,
-                width: 30,
-                child: Image.asset('assets/logo.png'),
-              ),
-              Center(
-                child: SizedBox(
-                  width: 250,
-                  height: 38,
-                  child: TextField(
-                    style: TextStyle(color: Colors.black),
-                    textAlign: TextAlign.start,
-                    decoration: InputDecoration(
-                      filled: true,
-                      fillColor: Color(0xffF6F6F6),
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20.0),
-                        borderSide: BorderSide(
-                          color: Colors.green,
-                          width: 1.0,
+          child: Stack(
+              children: [
+                SizedBox(
+                  height: 2.0,
+                ),
+                Positioned(
+                    top: 30,
+                    left: 5,
+                    child:SizedBox(
+                      height: 40,
+                      width: 40,
+                      child: Image.asset('assets/logo2.png'),
+                    )
+                ),
+                Positioned(
+                    top: 37,
+                    left: 305,
+                    child:SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: Image.asset('assets/search.png'),
+                    )
+                ),
+                Positioned(
+                    top: 78,
+                    left: 340,
+                    child:SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: Image.asset('assets/2km.png'),
+                    )
+                ),
+                Positioned(
+                    top: 36,
+                    left: 340,
+                    child:SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: Image.asset('assets/alarm.png'),
+                    )
+                ),
+                //Icon(Icons.add_alert_rounded),
+                Center(
+                  child: SizedBox(
+                    width: 220,
+                    height: 33,
+                      child: TextField(
+                        style: TextStyle(color: Colors.grey),
+                        //textAlign: TextAlign.start,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xffF6F6F6),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: BorderSide(
+                              color: Color(0xff2b2b2b),
+                              width: 1.0,
+                            ),
+                          ),
+                          hintText: "검색어를 입력하세요.",
+                          //prefixIcon: Icon(Icons.search),
+                          //prefixIconColor: Colors.grey,
                         ),
                       ),
-                      hintText: "검색어를 입력하세요",
-                      prefixIcon: Icon(Icons.search),
-                      prefixIconColor: Colors.grey,
-                  ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 8.0,
-              ),
-              RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                      text: "충청남도 천안시 동남구",
-                      style: TextStyle(
+                Positioned(
+                    top: 82,
+                    left: 15,
+                    child:SizedBox(
+                      height: 15,
+                      width: 15,
+                      child: Image.asset('assets/logo3.png'
+                      ),
+                    )
+                ),
+                Positioned(
+                  top: 80,
+                  left: 35,
+                  child: Text("충청남도 천안시 동남구",
+                    style: TextStyle(
                       color: Colors.black,
-                      fontSize: 13.0,
+                      fontSize: 14.0,
                       fontWeight: FontWeight.bold,
                     ),
-                    ),
-                    WidgetSpan(
-                      child: Icon(Icons.arrow_drop_down_outlined),
-                    ),
-                  ],
+                  ),
                 ),
-              ),
-            ],
+
+                Positioned(
+                  top: 79,
+                  left: 170,
+                  child: Icon(
+                    Icons.arrow_drop_down_outlined
+                  )
+                ),
+              ],
           ),
-        ),
         ),
       );
 
