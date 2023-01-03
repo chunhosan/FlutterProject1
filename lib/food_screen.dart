@@ -1,6 +1,7 @@
 import 'dart:core';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 
 class FoodScreen extends StatefulWidget {
@@ -16,7 +17,7 @@ class _FoodScreenState extends State<FoodScreen> {
     'assets/profile4.png',
     'assets/profile5.png',
   ];
-  static List<String> nowpname = ['박영재','윤승민','임새롬','김겨울','고은'];
+  static List<String> nowpname = ['박영재','천호산','임새롬','김겨울','고은'];
   static List<String> nowimage = [
     'assets/#image (6).png',
     'assets/#image (7).png',
@@ -287,9 +288,8 @@ class _FoodScreenState extends State<FoodScreen> {
                         ]
                     ),
                   );
-                }
+                },
               ),
-
                 //NOWPAGE 구현
               Scaffold(
                 backgroundColor: Color(0xffecf3fc),
@@ -297,170 +297,175 @@ class _FoodScreenState extends State<FoodScreen> {
                     itemCount: Nowdata.length,
                     itemBuilder: (context,index){
                       return Card(
-                        child: Stack(
+                        child: Column(
                           children: [
-                            Container(
-                                    height: 440.0,
-                                    //width: MediaQuery.of(context).size.width * 0.5 -65,
-                                    decoration: BoxDecoration(
-                                      color: Color(0xffecf3fc),
-                                      borderRadius: BorderRadius.circular(0.0),
-                                    ),
-                                  ),
+                            SizedBox(
+                              height: 5,
+                            ),
                             //NPIMAGE
-                            Positioned(
-                                top: 10,
-                                left: 10,
-                              child: InkWell(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10.0),
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: Image.asset(Nowdata[index].NPImage),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: InkWell(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: Image.asset(Nowdata[index].NPImage),
+                                        ),
+                                      ),
+                                      onTap: (){
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FoodDetail(foodDataModel: Nowdata[index],)));
+                                      }
                                   ),
                                 ),
-                                  onTap: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FoodDetail(foodDataModel: Nowdata[index],)));
-                                  }
-                              ),
+                                Flexible(
+                                  fit: FlexFit.tight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Text(
+                                      Nowdata[index].NPName,
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 13,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                                Column(
+                                  children: [
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Text(
+                                        '8m ago',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 10,
+                                        ),),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Image.asset('assets/coolicon8.png'),
+                                    ),
+                                  ],
+                                )
+                              ],
                             ),
-                            //NPNAME
-                            Positioned(
-                              top: 10,
-                              left: 70,
-                              child: InkWell(
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Center(
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(10),
+                                    child: Image.asset(Nowdata[index].NImage,
+                                      height: 250,
+                                      width: MediaQuery.of(context).size.width * 0.93,
+                                      fit: BoxFit.cover,
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
                                   child: Text(
-                                    Nowdata[index].NPName,
+                                    Nowdata[index].NTitle,
                                     style: TextStyle(
                                       fontWeight: FontWeight.bold,
+                                      fontSize: 14,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: SizedBox(
+                                    width: 30,
+                                    height: 30,
+                                    child: Image.asset('assets/coolicon7.png'),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
+                                  child: Text(
+                                    Nowdata[index].NContent,
+                                    style: TextStyle(
+                                      //fontWeight: FontWeight.bold,
                                       fontSize: 13,
                                     ),
                                   ),
-                                  onTap: (){
-                                    Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FoodDetail(foodDataModel: Nowdata[index],)));
-                                  }
-                              ),
+                                ),
+                              ],
                             ),
-                            //NIMAGE
-                            Positioned(
-                              top: 75,
-                              left: 10,
-                              child: Center(
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(Nowdata[index].NImage,
-                                    height: 250,
-                                    width: MediaQuery.of(context).size.width * 0.93,
-                                    fit: BoxFit.cover,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10,3,0,0),
+                                  child: Row(
+                                    children: [
+                                      Text('8m ago',
+                                        style: TextStyle(
+                                          color: Colors.grey,
+                                          fontSize: 10,
+                                        ),),
+                                    ]
                                   ),
                                 ),
-                              ),
+                              ],
                             ),
-                            //NTITLE
-                            Positioned(
-                              top: 330,
-                              left: 10,
-                              child: Text(
-                                Nowdata[index].NTitle,
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 13,
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                                  child: Row(
+                                      children: [
+                                        Icon(Icons.favorite_border),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(Icons.messenger_outline),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(Icons.share),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                                          child: Row(
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                                child: Icon(Icons.facebook),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                                child: Icon(FontAwesomeIcons.twitter),
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                                child: Icon(FontAwesomeIcons.instagram),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ]
+                                  ),
                                 ),
-                              ),
+                              ],
                             ),
-                            //NCONTENT
-                            Positioned(
-                              top: 360,
-                              left: 10,
-                              child: Text(
-                                Nowdata[index].NContent,
-                                style: TextStyle(
-                                  //fontWeight: FontWeight.bold,
-                                  fontSize: 13,
-                                ),
-                              ),
+                            SizedBox(
+                              height: 20,
                             ),
-                            //ICON
-                            Positioned(
-                              top: 400,
-                              left: 10,
-                              child: InkWell(
-                                  child: Image.asset('assets/coolicon6.png'),
-                                  /*onTap: (){
-                                    Navigator.of(context).push(),
-                                  }*/
-                              ),
-                            ),
-                            Positioned(
-                              top: 400,
-                              left: 40,
-                              child: InkWell(
-                                child: Image.asset('assets/coolicon1.png'),
-                                /*onTap: (){
-                                    Navigator.of(context).push(),
-                                  }*/
-                              ),
-                            ),
-                            Positioned(
-                              top: 398,
-                              left: 65,
-                              child: InkWell(
-                                child: Image.asset('assets/coolicon2.png'),
-                                /*onTap: (){
-                                    Navigator.of(context).push(),
-                                  }*/
-                              ),
-                            ),
-                            Positioned(
-                              top: 399,
-                              left: 120,
-                              child: InkWell(
-                                child: Image.asset('assets/coolicon3.png'),
-                                /*onTap: (){
-                                    Navigator.of(context).push(),
-                                  }*/
-                              ),
-                            ),
-                            Positioned(
-                              top: 400,
-                              left: 150,
-                              child: InkWell(
-                                child: Image.asset('assets/coolicon4.png'),
-                                /*onTap: (){
-                                    Navigator.of(context).push(),
-                                  }*/
-                              ),
-                            ),
-                            Positioned(
-                              top: 400,
-                              left: 180,
-                              child: InkWell(
-                                child: Image.asset('assets/coolicon5.png'),
-                                /*onTap: (){
-                                    Navigator.of(context).push(),
-                                  }*/
-                              ),
-                            ),
-                            Positioned(
-                              top: 335,
-                              left: 325,
-                              child: Image.asset('assets/coolicon7.png'),
-                              ),
-                            Positioned(
-                              top: 40,
-                              left: 360,
-                              child: Image.asset('assets/coolicon8.png'),
-                            ),
-                            Positioned(
-                              top: 25,
-                              left: 340,
-                              child: Text('8m ago',
-                                style: TextStyle(
-                                  color: Colors.grey,
-                                  fontSize: 10,
-                                ),),
-                              ),
                           ],
                         ),
                       );
@@ -489,76 +494,34 @@ class FoodDetail extends StatelessWidget{
         title: Text('프로필'),
         centerTitle: true,
         elevation: 0,
-        backgroundColor: Color(0xffB1B8C0),
+        // backgroundColor: Color(0xffB1B8C0),
+        backgroundColor: Color(0xffBDBDBD),
       ),
       body: Container(
-        //height: double.maxFinite,
-        //width: double.maxFinite,
-        child: Stack(
+        child: Column(
           children: [
             Container(
-              height: 1000,
+              height: MediaQuery.of(context).size.height * 0.25,
               width: double.maxFinite,
               decoration: BoxDecoration(
-                  color: Color(0xfffafafa),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20),
-                  ),
-              ),
-            ),
-            Container(
-                height: 220,
-                width: double.maxFinite,
-                decoration: BoxDecoration(
-                    color: Color(0xffB1B8C0),
-                    borderRadius: BorderRadius.only(
-                      bottomLeft: Radius.circular(20),
-                      bottomRight: Radius.circular(20),
-                    )
+                color: Color(0xffBDBDBD),
+                borderRadius: BorderRadius.only(
+                  bottomLeft: Radius.circular(20),
+                  bottomRight: Radius.circular(20),
                 ),
               ),
-            //도형
-           /*Positioned(
-                top: 260,
-                left: 20,
-                child: Column(
-                  children: [
-                    Center(
-                      child: Container(
-                        height: 40,
-                        width: 150,
-                        decoration: BoxDecoration(
-                          border: Border.all(color: Color(0xffBDBDBD), width: 1),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        child: Container(
-                          height: 80,
-                          width: 150,
-                          decoration: BoxDecoration(
-                            color: Color(0xffE8E8E8),
-                            borderRadius: BorderRadius.circular(30)
-                          ),
-                          
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-
-            ),*/
-            Positioned(
-              top: 15,
-              left: MediaQuery.of(context).size.width * 0.5 -65,
               child: Column(
                 //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
+                  SizedBox(
+                    height: 10,
+                  ),
                   Center(
                     child: Container(
                       decoration: BoxDecoration(
                         border: Border.all(color: Colors.white, width: 3),
                         borderRadius: BorderRadius.circular(60),
-                        ),
+                      ),
 
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(60),
@@ -569,7 +532,7 @@ class FoodDetail extends StatelessWidget{
                         ),
                       ),
                     ),
-                     ),
+                  ),
 
                   Text(foodDataModel.NPName,
                     style: TextStyle(
@@ -583,200 +546,157 @@ class FoodDetail extends StatelessWidget{
                 ],
               ),
             ),
-            //NIMAGE
-            Positioned(
-              top: 325,
-              left: 10,
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(10),
-                  child: Image.asset(foodDataModel.NImage,
-                    height: 250,
-                    width: MediaQuery.of(context).size.width * 0.93,
-                    fit: BoxFit.cover,
-                  ),
+            SizedBox(
+              height: 30,
+            ),
+            Column(
+              children: [
+                //NPIMAGE
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Column(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0,0,20,0),
+                          child: Text(
+                            '8m ago',
+                            style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 10,
+                            ),),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Image.asset('assets/coolicon8.png'),
+                        ),
+                      ],
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            //NTITLE
-            Positioned(
-              top: 580,
-              left: 10,
-              child: Text(
-                foodDataModel.NTitle,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 13,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Center(
+                      child: ClipRRect(
+                        borderRadius: BorderRadius.circular(10),
+                        child: Image.asset(foodDataModel.NImage,
+                          height: 250,
+                          width: MediaQuery.of(context).size.width * 0.93,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            //NCONTENT
-            Positioned(
-              top: 610,
-              left: 10,
-              child: Text(
-                foodDataModel.NContent,
-                style: TextStyle(
-                  //fontWeight: FontWeight.bold,
-                  fontSize: 13,
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
+                      child: Text(
+                        foodDataModel.NTitle,
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        width: 30,
+                        height: 30,
+                        child: Image.asset('assets/coolicon7.png'),
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-            ),
-            //ICON
-            Positioned(
-              top: 650,
-              left: 10,
-              child: InkWell(
-                child: Image.asset('assets/coolicon6.png'),
-                /*onTap: (){
-                                      Navigator.of(context).push(),
-                                    }*/
-              ),
-            ),
-            Positioned(
-              top: 650,
-              left: 40,
-              child: InkWell(
-                child: Image.asset('assets/coolicon1.png'),
-                /*onTap: (){
-                                      Navigator.of(context).push(),
-                                    }*/
-              ),
-            ),
-            Positioned(
-              top: 648,
-              left: 65,
-              child: InkWell(
-                child: Image.asset('assets/coolicon2.png'),
-                /*onTap: (){
-                                      Navigator.of(context).push(),
-                                    }*/
-              ),
-            ),
-            Positioned(
-              top: 649,
-              left: 120,
-              child: InkWell(
-                child: Image.asset('assets/coolicon3.png'),
-                /*onTap: (){
-                                      Navigator.of(context).push(),
-                                    }*/
-              ),
-            ),
-            Positioned(
-              top: 650,
-              left: 150,
-              child: InkWell(
-                child: Image.asset('assets/coolicon4.png'),
-                /*onTap: (){
-                                      Navigator.of(context).push(),
-                                    }*/
-              ),
-            ),
-            Positioned(
-              top: 650,
-              left: 180,
-              child: InkWell(
-                child: Image.asset('assets/coolicon5.png'),
-                /*onTap: (){
-                                      Navigator.of(context).push(),
-                                    }*/
-              ),
-            ),
-            Positioned(
-              top: 585,
-              left: 325,
-              child: Image.asset('assets/coolicon7.png'),
-            ),
-            Positioned(
-              top: 290,
-              left: 360,
-              child: Image.asset('assets/coolicon8.png'),
-            ),
-            Positioned(
-              top: 275,
-              left: 340,
-              child: Text('8m ago',
-                style: TextStyle(
-                  color: Colors.grey,
-                  fontSize: 10,
-                ),),
-            ),
-            //프로필 카메라 구현
-            /*Positioned(
-              top: 180,
-              left: MediaQuery.of(context).size.width * 0.5 + 30,
-              child: Container(
-                height: 45,
-                width: 45,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Color(0xffB1B8C0),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
+                      child: Text(
+                        foodDataModel.NContent,
+                        style: TextStyle(
+                          //fontWeight: FontWeight.bold,
+                          fontSize: 13,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                child: Icon(
-                  Icons.camera_alt,
-                  color: Colors.white,
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10,3,0,0),
+                      child: Row(
+                          children: [
+                            Text('8m ago',
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 10,
+                              ),),
+                          ]
+                      ),
+                    ),
+                  ],
                 ),
-              ),
-              ),*/
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                      child: Row(
+                          children: [
+                            Icon(Icons.favorite_border),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                              child: Icon(Icons.messenger_outline),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                              child: Icon(Icons.share),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                              child: Row(
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.facebook),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(FontAwesomeIcons.twitter),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(FontAwesomeIcons.instagram),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ]
+                      ),
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 20,
+                ),
+              ],
+            ),
           ],
         ),
       ),
     );
   }
 }
-/*class NOWPageList extends StatelessWidget{
-   final String NPImage,NPName,NImage,NTitle,NContent,desc;
-   NOWPageList(this.NPImage, this.NPName, this.NImage, this.NTitle, this.NContent,this.desc);
-
-   static List<String> nowpimage = [
-     'assets/#image (1).png',
-     'assets/#image (2).png',
-     'assets/#image (3).png',
-     'assets/#image (4).png',
-     'assets/#image (5).png',
-   ];
-   static List<String> nowpname = ['사용자1','사용자2','사용자3','사용자4','사용자5'];
-
-   static List<String> nowimage = [
-     'assets/#image (1).png',
-     'assets/#image (2).png',
-     'assets/#image (3).png',
-     'assets/#image (4).png',
-     'assets/#image (5).png',
-   ];
-
-   static List<String> nowtitle = ['사용자1','사용자2','사용자3','사용자4','사용자5'];
-   static List<String> nowcontent = ['사용자1','사용자2','사용자3','사용자4','사용자5'];
-
-
-   final List<NOWPageList> Nowdata = List.generate(
-       nowpname.length,
-           (index)
-       => NOWPageList('${nowpimage[index]}','${nowpname[index]}','${nowimage[index]}','${nowtitle[index]}',
-           '${nowcontent[index]}','${nowpname[index]} Description...'));
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: ListView.builder(
-        itemCount: Nowdata.length,
-        itemBuilder: (context,index){
-          return Card(
-            child: ListTile(
-              title: Text(Nowdata[index].NPImage),
-            ),
-          );
-        }),
-
-    );
-  }}*/
-
   //delegate
   class MyDelegate extends SliverPersistentHeaderDelegate{
   MyDelegate(this.tabBar);
   final TabBar tabBar;
-
   @override
   Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
   return Container(
@@ -802,109 +722,96 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-      return Scaffold(
-        backgroundColor: Color(0xffecf3fc),
-        body: Padding(
-          padding: EdgeInsets.all(12),
-          child: Stack(
-              children: [
-                SizedBox(
-                  height: 2.0,
+    return Scaffold(
+      backgroundColor: Color(0xffecf3fc),
+      body: Column(
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.height * 0.04,
+          ),
+          Row(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15,8,0,0),
+                child: SizedBox(
+                  height: 50,
+                  width: 50,
+                  child: Image.asset('assets/logo2.png'),
                 ),
-                Positioned(
-                    top: 30,
-                    left: 5,
-                    child:SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Image.asset('assets/logo2.png'),
-                    )
-                ),
-                Positioned(
-                    top: 37,
-                    left: 305,
-                    child:SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: Image.asset('assets/search.png'),
-                    )
-                ),
-                Positioned(
-                    top: 78,
-                    left: 340,
-                    child:SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: Image.asset('assets/2km.png'),
-                    )
-                ),
-                Positioned(
-                    top: 36,
-                    left: 340,
-                    child:SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: Image.asset('assets/alarm.png'),
-                    )
-                ),
-                //Icon(Icons.add_alert_rounded),
-                Center(
+              ),
+              SizedBox(
+                child: Padding(
+                  padding: const EdgeInsets.fromLTRB(15,0,0,0),
                   child: SizedBox(
                     width: 220,
                     height: 33,
-                      child: TextField(
-                        style: TextStyle(color: Colors.grey),
-                        //textAlign: TextAlign.start,
-                        decoration: InputDecoration(
-                          filled: true,
-                          fillColor: Color(0xffF6F6F6),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(20.0),
-                            borderSide: BorderSide(
-                              color: Color(0xff2b2b2b),
-                              width: 1.0,
-                            ),
+                    child: TextField(
+                      style: TextStyle(color: Colors.grey),
+                      //textAlign: TextAlign.start,
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Color(0xffF6F6F6),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20.0),
+                          borderSide: BorderSide(
+                            color: Color(0xff2b2b2b),
+                            width: 1.0,
                           ),
-                          hintText: "검색어를 입력하세요.",
-                          //prefixIcon: Icon(Icons.search),
-                          //prefixIconColor: Colors.grey,
                         ),
+                        hintText: "검색어를 입력하세요.",
+                        //prefixIcon: Icon(Icons.search),
+                        //prefixIconColor: Colors.grey,
                       ),
-                  ),
-                ),
-                Positioned(
-                    top: 82,
-                    left: 15,
-                    child:SizedBox(
-                      height: 15,
-                      width: 15,
-                      child: Image.asset('assets/logo3.png'
-                      ),
-                    )
-                ),
-                Positioned(
-                  top: 80,
-                  left: 35,
-                  child: Text("충청남도 천안시 동남구",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontSize: 14.0,
-                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-
-                Positioned(
-                  top: 79,
-                  left: 170,
-                  child: Icon(
-                    Icons.arrow_drop_down_outlined
-                  )
+              ),
+              Padding(
+                padding: const EdgeInsets.all(10.0),
+                child: SizedBox(
+                  height: 25,
+                  width: 25,
+                  child: Icon(FontAwesomeIcons.search,color: Colors.grey,),
                 ),
-              ],
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(5,0,0,0),
+                child: Icon(Icons.notifications,size: 35,color: Colors.grey,),
+              ),
+            ],
           ),
-        ),
-      );
-
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(20,5,0,0),
+                child: Row(
+                  children: [
+                    Image.asset('assets/logo3.png'),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                      child: Text("충청남도 천안시 동남구",
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 14.0,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                    Icon(
+                        Icons.arrow_drop_down_outlined
+                    ),
+                    Spacer(),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0,0,30,0),
+                      child: Image.asset('assets/2km.png'),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
   }
 }

@@ -40,7 +40,11 @@ dependencies:
   cloud_firestore: ^4.2.0
   firebase_core: ^2.4.0
   firebase_auth: ^4.2.1
+  google_sign_in: ^5.4.2
+  firebase_storage: ^11.0.10
   flutterfire_ui: ^0.4.3+20
+  font_awesome_flutter: ^10.3.0
+  shared_preferences: ^2.0.15
   # flutter_breadcrumb: ^1.0.1
 
 
@@ -74,6 +78,11 @@ flutter:
    - assets/alarm.png
    - assets/search.png
    - assets/2km.png
+   - assets/plusrec.png
+   - assets/plusimage1.png
+   - assets/plusimage2.png
+   - assets/plusimage3.png
+   - assets/plusimage4.png
    - assets/profile1.png
    - assets/profile2.png
    - assets/profile3.png

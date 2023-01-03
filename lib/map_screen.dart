@@ -336,6 +336,7 @@ class _MapScreenState extends State<MapScreen> {
       appBar: PreferredSize(
         preferredSize: Size.fromHeight(150.0),
         child: AppBar(
+          elevation: 0.0,
           backgroundColor: Color(0xffffffff),
           titleTextStyle: TextStyle(
             color: Colors.black,
@@ -346,27 +347,12 @@ class _MapScreenState extends State<MapScreen> {
           //elevation: 10.0,
           title: Row(
 
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: <Widget>[
-              IconButton(
-                icon: Icon(
-                  Icons.arrow_back,
-                  color: Colors.black,
-                ),
-                onPressed:(){
-                  FirebaseAuth.instance.signOut();
-                },
-              ),
-
               Text('MAP',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                 ),),
-              Icon(
-                  Icons.arrow_back,
-                  color: Color(0xffecf3fc),
-
-              ),
             ],
           ),
           /*leading: */
@@ -417,7 +403,7 @@ class MapHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xffecf3fc),
+      backgroundColor: Colors.white,
       body: Padding(
         padding: EdgeInsets.all(12),
         child: Stack(

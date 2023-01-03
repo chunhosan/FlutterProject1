@@ -1,11 +1,11 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'main.dart';
 import 'user_screen.dart';
 import 'food_screen.dart';
 import 'map_screen.dart';
 import 'plus_screen.dart';
 import 'chat_screen.dart';
-
+import 'chat_screen2.dart';
 
 class bottombar extends StatefulWidget {
   @override
@@ -21,6 +21,7 @@ class _bottombar extends State<bottombar> {
     FoodScreen(),
     MapScreen(),
     PlusScreen(),
+    //ChatScreen2(),
     ChatScreen(),
     UserScreen(),
 
