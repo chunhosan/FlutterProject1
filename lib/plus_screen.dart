@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
@@ -35,8 +36,14 @@ class _PlusScreenState extends State<PlusScreen> {
       plustitle.length,
           (index)
       => PlusDataModel2('${plusimage[index]}','${plustitle[index]}','${plusimage[index]} Description...'));
+  final CarouselController _controller = CarouselController();
 
-
+  final plusimage2 = [
+    'assets/plusimage1.png',
+    'assets/plusimage2.png',
+    'assets/plusimage3.png',
+    'assets/plusimage4.png',
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -84,7 +91,7 @@ class _PlusScreenState extends State<PlusScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               SizedBox(
-                                height: MediaQuery.of(context).size.height * 0.03,
+                                height: MediaQuery.of(context).size.height * 0.02,
                               ),
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(10,0,0,0),
@@ -111,7 +118,7 @@ class _PlusScreenState extends State<PlusScreen> {
                                 ),
                               ),
                               SizedBox(
-                                height: MediaQuery.of(context).size.height*0.05,
+                                height: MediaQuery.of(context).size.height*0.03,
                               ),
                               Padding(
                                 padding: const EdgeInsets.all(20.0),
@@ -153,8 +160,7 @@ class _PlusScreenState extends State<PlusScreen> {
                             Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Center(
-                                  child: ClipRRect(
+                                ClipRRect(
                                     borderRadius: BorderRadius.circular(10),
                                     child: Image.asset(Plusdata2[index].plusimage,
                                       height: 250,
@@ -162,7 +168,33 @@ class _PlusScreenState extends State<PlusScreen> {
                                       fit: BoxFit.cover,
                                     ),
                                   ),
-                                ),
+
+                                /*CarouselSlider(
+                                  carouselController: _controller,
+                                  options: CarouselOptions(
+                                      height: MediaQuery.of(context).size.height/2,
+                                      scrollDirection: Axis.horizontal,
+                                      enlargeCenterPage: true,
+                                      viewportFraction: 1.0
+                                  ),
+                                  items: plusimage2.map(image){
+                                },
+                                ),*/
+                                /*PageView.builder(
+                                    itemCount: 4,
+                                    pageSnapping: true,
+                                    itemBuilder: (context,index){
+                                      return Container(
+                                        margin: EdgeInsets.all(10),
+                                        child: ClipRRect(
+                                          borderRadius: BorderRadius.circular(10),
+                                          child: Image.asset(Plusdata2[index].plusimage,
+                                            height: 250,
+                                            width: MediaQuery.of(context).size.width * 0.93,
+                                            fit: BoxFit.cover,)),
+                                      );
+                                    },
+                                  ),*/
                               ],
                             ),
                             Row(
@@ -236,18 +268,9 @@ class _PlusScreenState extends State<PlusScreen> {
                 childCount: Plusdata2.length,
               ),
             ),
-
           ],
         ));
-
-
-
   }
-
-}
-
-class CategoryCard {
-
 }
 
 class PlusHeader extends StatelessWidget{

@@ -123,7 +123,7 @@ class _UserScreenState extends State<UserScreen> {
         child: Column(
           children: [
             Container(
-              height: MediaQuery.of(context).size.height * 0.25,
+              height: MediaQuery.of(context).size.height * 0.30,
               width: double.maxFinite,
               decoration: BoxDecoration(
                 color: Color(0xffBDBDBD),
@@ -136,7 +136,7 @@ class _UserScreenState extends State<UserScreen> {
                 //crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   SizedBox(
-                    height: 10,
+                    height: MediaQuery.of(context).size.height * 0.01,
                   ),
                   Stack(
                     children: [
@@ -165,19 +165,19 @@ class _UserScreenState extends State<UserScreen> {
                     ],
                   ),
                   SizedBox(
-                    height: MediaQuery.of(context).size.height*0.005,
+                    height: MediaQuery.of(context).size.height*0.01,
                   ),
                   Text('천호산',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 30,
+                      fontSize: 25,
                     ),),
                   SizedBox(
                     height: MediaQuery.of(context).size.height*0.01,
                   ),
                   Text('컴퓨터공학부 전공',
                     style: TextStyle(
-                      fontSize: 20,
+                      fontSize: 15,
                       fontWeight: FontWeight.bold,
                     ),),
                 ],
@@ -188,29 +188,6 @@ class _UserScreenState extends State<UserScreen> {
             ),
             Column(
               children: [
-                //NPIMAGE
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Column(
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0,0,20,0),
-                          child: Text(
-                            '8m ago',
-                            style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 10,
-                            ),),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Image.asset('assets/coolicon8.png'),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [

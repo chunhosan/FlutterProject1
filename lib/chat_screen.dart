@@ -49,7 +49,8 @@ class _ChatScreenState extends State<ChatScreen> {
               child: Text('오류가 발생했습니다.'),
             );
           } else {
-            List<MessageModel> messages = asyncSnapshot.data!; //비동기 데이터가 존재할 경우 리스트뷰 표시
+            List<MessageModel> messages = asyncSnapshot.data!;
+            //비동기 데이터가 존재할 경우 리스트뷰 표시
             return Column(
               mainAxisSize: MainAxisSize.max,
               children: [
@@ -58,11 +59,27 @@ class _ChatScreenState extends State<ChatScreen> {
                       // 상위 위젯의 크기를 기준으로 잡는게 아닌 자식위젯의 크기를 기준으로 잡음
                         itemCount: messages.length,
                         itemBuilder: (context, index) {
-                          return ListTile(
-                            title: Text(messages[index].content),
-                            subtitle: Text(messages[index].sendDate.toDate().toLocal().toString().substring(5,16)),
-                          );
-                        })),
+                          return Padding(
+                              padding: EdgeInsets.fromLTRB(10,10,150,20),
+                              child: Align(
+                                alignment: Alignment.centerLeft,
+                                child: DecoratedBox(
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey[200],
+                                      borderRadius: BorderRadius.circular(16),
+                                    ),
+                                    child: Padding(
+                                      padding: EdgeInsets.fromLTRB(0,0,10,0),
+                                      child: ListTile(
+                                        title: Text(messages[index].content),
+                                        subtitle: Text(messages[index].sendDate.toDate().toLocal().toString().substring(5,16)),
+                                      ),
+                                    )
+                                ),
+                              ),
+                            );
+                        }),
+                ),
                 getInputWidget()
               ],
             );
@@ -88,7 +105,7 @@ class _ChatScreenState extends State<ChatScreen> {
   }
   Widget getInputWidget() {
     return Container(
-      height: 60,
+      height: MediaQuery.of(context).size.height*0.08,
       width: double.infinity,
       decoration: BoxDecoration(boxShadow: const [
         BoxShadow(color: Colors.black12, offset: Offset(0, -2), blurRadius: 3)
@@ -129,7 +146,8 @@ class _ChatScreenState extends State<ChatScreen> {
                   minHeight: 0
               ),
               elevation: 2,
-              fillColor: Theme.of(context).colorScheme.primary,
+              //fillColor: Theme.of(context).colorScheme.primary,
+              fillColor: Colors.grey,
               shape: CircleBorder(),
               child: Padding(
                 padding: EdgeInsets.all(10),
@@ -182,14 +200,16 @@ class MessageModel {
     this.id = '',
     this.content = '',
     Timestamp? sendDate,
+    //required this.sent,
   }):sendDate = sendDate??Timestamp(0, 0);
+
 
   //서버로부터 map형태의 자료를 MessageModel형태의 자료로 변환해주는 역할을 수행함.
   factory MessageModel.fromMap({required String id,required Map<String,dynamic> map}){
     return MessageModel(
         id: id,
         content: map['content']??'',
-        sendDate: map['sendDate']??Timestamp(0, 0)
+        sendDate: map['sendDate']??Timestamp(0, 0),
     );
   }
 
