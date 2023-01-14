@@ -24,7 +24,7 @@ class Setting extends StatelessWidget{
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Container(
-                //height: MediaQuery.of(context).size.height*0.001,
+              //height: MediaQuery.of(context).size.height*0.001,
                 width: MediaQuery.of(context).size.width*1,
                 child: Divider(color: Color(0xffB1B8C0), thickness: 0.5)),
             Padding(
@@ -59,7 +59,7 @@ class Setting extends StatelessWidget{
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text('사용자 설정',
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+                      style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0,10,0,0),
                     child: Text('계정 / 정보 관리',style: TextStyle(fontSize: 17),),
@@ -99,7 +99,7 @@ class Setting extends StatelessWidget{
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0,10,0,0),
-                    
+
                     child: Text('탈퇴하기',style: TextStyle(fontSize: 17),),
                   ),
                   Padding(

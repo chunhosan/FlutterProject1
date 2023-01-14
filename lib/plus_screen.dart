@@ -13,9 +13,16 @@ class PlusDataModel1{
   PlusDataModel1(this.subtitle, this.title,this.icon,this.desc1);
 }
 class PlusDataModel2{
-  late final String plusimage,plustitle,desc2;
-  PlusDataModel2(this.plusimage,this.plustitle,this.desc2);
+  late final String plusimage1,desc2;
+  PlusDataModel2(this.plusimage1,this.desc2);
 }
+class PlusDataModel3{
+  late final String plustitle,desc3;
+  PlusDataModel3(this.plustitle,this.desc3);
+}
+
+
+
 class _PlusScreenState extends State<PlusScreen> {
   static List<String> subtitle = ['숨어있는','핫플레이스','자주검색하는','인기'];
   static List<String> title = ['맛집','오락,문화시설','장소','더보기'];
@@ -25,56 +32,57 @@ class _PlusScreenState extends State<PlusScreen> {
           (index)
       => PlusDataModel1('${subtitle[index]}','${title[index]}','${icons[index]}','${subtitle[index]} Description...'));
 
-  static List<String> plusimage = [
-    'assets/plusimage1.png',
-    'assets/plusimage2.png',
-    'assets/plusimage3.png',
-    'assets/plusimage4.png',
+  static List<String> plusimage1 = [
+    'assets/plusimage/plusimage1/plusimage1-1.jpg', 'assets/plusimage/plusimage1/plusimage1-2.jpg', 'assets/plusimage/plusimage1/plusimage1-3.jpg', 'assets/plusimage/plusimage1/plusimage1-4.jpg',
   ];
-  static List<String> plustitle = ['놀숲 만화방 신부점','캠프 VR','코인노래방 불당점','천안 PC방'];
-  final List<PlusDataModel2> Plusdata2 = List.generate(
-      plustitle.length,
-          (index)
-      => PlusDataModel2('${plusimage[index]}','${plustitle[index]}','${plusimage[index]} Description...'));
-  final CarouselController _controller = CarouselController();
+  static List<String> plusimage2 = [
+    'assets/plusimage/plusimage2/plusimage2-1.png', 'assets/plusimage/plusimage2/plusimage2-2.jpg', 'assets/plusimage/plusimage2/plusimage2-3.jpg', 'assets/plusimage/plusimage2/plusimage2-4.jpg',
+  ];
+  static List<String> plusimage3 = [
+    'assets/plusimage/plusimage3/plusimage3-1.jpg', 'assets/plusimage/plusimage3/plusimage3-2.jpg', 'assets/plusimage/plusimage3/plusimage3-3.jpg', 'assets/plusimage/plusimage3/plusimage3-4.jpg',
+  ];
+  static List<String> plusimage4 = [
+    'assets/plusimage/plusimage4/plusimage4-1.jpg', 'assets/plusimage/plusimage4/plusimage4-2.jpg', 'assets/plusimage/plusimage4/plusimage4-3.jpg', 'assets/plusimage/plusimage4/plusimage4-4.jpg',
+  ];
+  //static List<String> plustitle = ['놀숲 만화방 신부점','캠프 VR','코인노래방 불당점','천안 PC방'];
+  int currentIndex1 = 0;
+  int currentIndex2 = 0;
+  int currentIndex3 = 0;
+  int currentIndex4 = 0;
 
-  final plusimage2 = [
-    'assets/plusimage1.png',
-    'assets/plusimage2.png',
-    'assets/plusimage3.png',
-    'assets/plusimage4.png',
-  ];
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      appBar: PreferredSize(
-        preferredSize: Size.fromHeight(150.0),
-        child: AppBar(
-          elevation: 0,
-          backgroundColor: Color(0xffffffff),
-          titleTextStyle: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.bold,
-            fontSize: 30,
-          ),
-          centerTitle: true,
-          //elevation: 10.0,
-          title: Row(
+        backgroundColor: Colors.white,
+        appBar: PreferredSize(
+          preferredSize: Size.fromHeight(150.0),
+          child: AppBar(
+            elevation: 0,
+            backgroundColor: Color(0xffffffff),
+            titleTextStyle: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
+            ),
+            centerTitle: true,
+            //elevation: 10.0,
+            title: Row(
 
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Text('PLUS',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),),
-            ],
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Text('PLUS',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),),
+              ],
+            ),
+            /*leading: */
+            flexibleSpace: PlusHeader(),
           ),
-          /*leading: */
-          flexibleSpace: PlusHeader(),
         ),
-      ),
         body: CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
@@ -82,8 +90,8 @@ class _PlusScreenState extends State<PlusScreen> {
                 // height: 200,
                 height: MediaQuery.of(context).size.height * 0.25,
                 child: ListView.builder(
-                    // itemExtent: 200,
-                  itemExtent: MediaQuery.of(context).size.height * 0.24,
+                  // itemExtent: 200,
+                    itemExtent: MediaQuery.of(context).size.height * 0.24,
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (context, index) =>
                         Container(
@@ -123,16 +131,16 @@ class _PlusScreenState extends State<PlusScreen> {
                               Padding(
                                 padding: const EdgeInsets.all(20.0),
                                 child: Row(
-                                      mainAxisAlignment: MainAxisAlignment.end,
-                                      children: [
-                                        Icon(
-                                          icons[index],
-                                          size: 50,
-                                          color: Colors.grey,
-                                          //color: Colors.,
-                                        ),
-                                      ],
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Icon(
+                                      icons[index],
+                                      size: 50,
+                                      color: Colors.grey,
+                                      //color: Colors.,
                                     ),
+                                  ],
+                                ),
                               ),],
                           ),
                           margin: EdgeInsets.all(5.0),
@@ -140,132 +148,597 @@ class _PlusScreenState extends State<PlusScreen> {
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(30),
                             gradient: RadialGradient(colors: [Colors.white,Color(0xffEAF3FE)],
-                              center: Alignment(0.5,1),
-                              radius: 0.8
+                                center: Alignment(0.5,1),
+                                radius: 0.8
                             ),
                           ),
-                    ),
+                        ),
                     itemCount: 4),
               ),
             ),
             SliverList(
               delegate: SliverChildBuilderDelegate(
-                      (context, index) => Card(
-                        child: Column(
-                          children: [
-                            //NPIMAGE
-                            SizedBox(
-                              height: 10,
+                    (context, index) => Card(
+                  child: Column(
+                    children: [
+                      //NPIMAGE
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*0.02,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: CarouselSlider.builder(
+                              options: CarouselOptions(
+                                onPageChanged: (index,reason){
+                                  setState(() {
+                                    print(reason.toString());
+                                    currentIndex1 = index;
+                                  });
+                                },
+                                enlargeCenterPage: true,
+                                height: MediaQuery.of(context).size.height*0.29,
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 3),
+                                reverse: false,
+                                aspectRatio: 5.0,
+                              ),
+                              itemCount: plusimage1.length,
+                              itemBuilder: (context,i,id){
+                                return GestureDetector(
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height*1,
+                                    width: MediaQuery.of(context).size.width*1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color: Colors.white),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        plusimage1[i],
+                                        //width: MediaQuery.of(context).size.width*1,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  /*onTap: (){
+                                          var image = plusimage2[i];
+                                        },*/
+                                );
+                              },
                             ),
-                            Column(
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
+                            child: Text(
+                              //Plusdata3[index].plustitle,
+                              '놀숲 만화방 신부점',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                ClipRRect(
-                                    borderRadius: BorderRadius.circular(10),
-                                    child: Image.asset(Plusdata2[index].plusimage,
-                                      height: 250,
-                                      width: MediaQuery.of(context).size.width * 0.93,
-                                      fit: BoxFit.cover,
+                                for(int i = 0; i<plusimage1.length; i++)
+                                  Container(
+                                    height: MediaQuery.of(context).size.height*0.02,
+                                    width: MediaQuery.of(context).size.width*0.02,
+                                    margin: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: currentIndex1 == i ? Color(0xff5DB075) : Color(0xffE8E8E8),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          spreadRadius: 1,
+                                          blurRadius: 3,
+                                          offset: Offset(2,2),
+                                        ),
+                                      ],
                                     ),
-                                  ),
-
-                                /*CarouselSlider(
-                                  carouselController: _controller,
-                                  options: CarouselOptions(
-                                      height: MediaQuery.of(context).size.height/2,
-                                      scrollDirection: Axis.horizontal,
-                                      enlargeCenterPage: true,
-                                      viewportFraction: 1.0
-                                  ),
-                                  items: plusimage2.map(image){
-                                },
-                                ),*/
-                                /*PageView.builder(
-                                    itemCount: 4,
-                                    pageSnapping: true,
-                                    itemBuilder: (context,index){
-                                      return Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: ClipRRect(
-                                          borderRadius: BorderRadius.circular(10),
-                                          child: Image.asset(Plusdata2[index].plusimage,
-                                            height: 250,
-                                            width: MediaQuery.of(context).size.width * 0.93,
-                                            fit: BoxFit.cover,)),
-                                      );
-                                    },
-                                  ),*/
+                                  )
                               ],
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
-                                  child: Text(
-                                    Plusdata2[index].plustitle,
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: const EdgeInsets.all(8.0),
-                                  child: SizedBox(
-                                    width: 30,
-                                    height: 30,
-                                    child: Image.asset('assets/coolicon7.png'),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Padding(
-                                  padding: const EdgeInsets.fromLTRB(10,10,0,0),
-                                  child: Row(
-                                      children: [
-                                        Icon(Icons.favorite_border),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                                          child: Icon(Icons.messenger_outline),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                                          child: Icon(Icons.share),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(15,0,0,0),
-                                          child: Row(
-                                            children: [
-                                              Padding(
-                                                padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                                                child: Icon(Icons.facebook),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                                                child: Icon(FontAwesomeIcons.twitter),
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                                                child: Icon(FontAwesomeIcons.instagram),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ]
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                          ],
-                        ),
+                          ),
+                        ],
                       ),
-                childCount: Plusdata2.length,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                            child: Row(
+                                children: [
+                                  Icon(Icons.favorite_border),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.messenger_outline),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.share),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(Icons.facebook),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.twitter),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.instagram),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+                childCount: 1,
+
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) => Card(
+                  child: Column(
+                    children: [
+                      //NPIMAGE
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*0.02,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: CarouselSlider.builder(
+                              options: CarouselOptions(
+                                onPageChanged: (index,reason){
+                                  setState(() {
+                                    print(reason.toString());
+                                    currentIndex2 = index;
+                                  });
+                                },
+                                enlargeCenterPage: true,
+                                height: MediaQuery.of(context).size.height*0.29,
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 3),
+                                reverse: false,
+                                aspectRatio: 5.0,
+                              ),
+                              itemCount: plusimage1.length,
+                              itemBuilder: (context,i,id){
+                                return GestureDetector(
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height*1,
+                                    width: MediaQuery.of(context).size.width*1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color: Colors.white),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        plusimage2[i],
+                                        //width: MediaQuery.of(context).size.width*1,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  /*onTap: (){
+                                          var image = plusimage2[i];
+                                        },*/
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
+                            child: Text(
+                              '캠프 VR',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for(int i = 0; i<plusimage1.length; i++)
+                                  Container(
+                                    height: MediaQuery.of(context).size.height*0.02,
+                                    width: MediaQuery.of(context).size.width*0.02,
+                                    margin: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: currentIndex2 == i ? Color(0xff5DB075) : Color(0xffE8E8E8),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          spreadRadius: 1,
+                                          blurRadius: 3,
+                                          offset: Offset(2,2),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                            child: Row(
+                                children: [
+                                  Icon(Icons.favorite_border),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.messenger_outline),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.share),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(Icons.facebook),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.twitter),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.instagram),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+                childCount: 1,
+
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) => Card(
+                  child: Column(
+                    children: [
+                      //NPIMAGE
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*0.02,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: CarouselSlider.builder(
+                              options: CarouselOptions(
+                                onPageChanged: (index,reason){
+                                  setState(() {
+                                    print(reason.toString());
+                                    currentIndex3 = index;
+                                  });
+                                },
+                                enlargeCenterPage: true,
+                                height: MediaQuery.of(context).size.height*0.29,
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 3),
+                                reverse: false,
+                                aspectRatio: 5.0,
+                              ),
+                              itemCount: plusimage1.length,
+                              itemBuilder: (context,i,id){
+                                return GestureDetector(
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height*1,
+                                    width: MediaQuery.of(context).size.width*1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color: Colors.white),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        plusimage3[i],
+                                        //width: MediaQuery.of(context).size.width*1,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  /*onTap: (){
+                                          var image = plusimage2[i];
+                                        },*/
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
+                            child: Text(
+                              '코인노래방 불당점',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for(int i = 0; i<plusimage1.length; i++)
+                                  Container(
+                                    height: MediaQuery.of(context).size.height*0.02,
+                                    width: MediaQuery.of(context).size.width*0.02,
+                                    margin: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: currentIndex3 == i ? Color(0xff5DB075) : Color(0xffE8E8E8),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          spreadRadius: 1,
+                                          blurRadius: 3,
+                                          offset: Offset(2,2),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                            child: Row(
+                                children: [
+                                  Icon(Icons.favorite_border),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.messenger_outline),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.share),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(Icons.facebook),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.twitter),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.instagram),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+                childCount: 1,
+
+              ),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                    (context, index) => Card(
+                  child: Column(
+                    children: [
+                      //NPIMAGE
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height*0.02,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Container(
+                            child: CarouselSlider.builder(
+                              options: CarouselOptions(
+                                onPageChanged: (index,reason){
+                                  setState(() {
+                                    print(reason.toString());
+                                    currentIndex4 = index;
+                                  });
+                                },
+                                enlargeCenterPage: true,
+                                height: MediaQuery.of(context).size.height*0.29,
+                                autoPlay: true,
+                                autoPlayInterval: Duration(seconds: 3),
+                                reverse: false,
+                                aspectRatio: 5.0,
+                              ),
+                              itemCount: plusimage1.length,
+                              itemBuilder: (context,i,id){
+                                return GestureDetector(
+                                  child: Container(
+                                    height: MediaQuery.of(context).size.height*1,
+                                    width: MediaQuery.of(context).size.width*1,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(15),
+                                      border: Border.all(color: Colors.white),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(15),
+                                      child: Image.asset(
+                                        plusimage4[i],
+                                        //width: MediaQuery.of(context).size.width*1,
+                                        fit: BoxFit.cover,
+                                      ),
+                                    ),
+                                  ),
+                                  /*onTap: (){
+                                          var image = plusimage2[i];
+                                        },*/
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(padding: const EdgeInsets.fromLTRB(10,0,4,0),
+                            child: Text(
+                              '천안 PC방',
+                              style: TextStyle(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 14,
+                              ),
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                for(int i = 0; i<plusimage1.length; i++)
+                                  Container(
+                                    height: MediaQuery.of(context).size.height*0.02,
+                                    width: MediaQuery.of(context).size.width*0.02,
+                                    margin: EdgeInsets.all(5),
+                                    decoration: BoxDecoration(
+                                      color: currentIndex4 == i ? Color(0xff5DB075) : Color(0xffE8E8E8),
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                          color: Colors.grey,
+                                          spreadRadius: 1,
+                                          blurRadius: 3,
+                                          offset: Offset(2,2),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                            child: Row(
+                                children: [
+                                  Icon(Icons.favorite_border),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.messenger_outline),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                    child: Icon(Icons.share),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(15,0,0,0),
+                                    child: Row(
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(Icons.facebook),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.twitter),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(8,0,0,0),
+                                          child: Icon(FontAwesomeIcons.instagram),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ]
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                ),
+                childCount: 1,
+
               ),
             ),
           ],
@@ -279,36 +752,36 @@ class PlusHeader extends StatelessWidget{
     return Scaffold(
       backgroundColor: Colors.white,
       body: Column(
-          children: [
-            SizedBox(
-              height: MediaQuery.of(context).size.width*0.24,
-            ),
-            Center(
-              child: SizedBox(
-                height: MediaQuery.of(context).size.width*0.1,
-                width: MediaQuery.of(context).size.width*0.9,
-                child: TextField(
-                  style: TextStyle(color: Colors.grey),
-                  //textAlign: TextAlign.start,
-                  decoration: InputDecoration(
-                    filled: true,
-                    fillColor: Color(0xffF6F6F6),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(30.0),
-                      borderSide: BorderSide(
-                        color: Color(0xff2b2b2b),
-                        width: 1.0,
-                      ),
+        children: [
+          SizedBox(
+            height: MediaQuery.of(context).size.width*0.24,
+          ),
+          Center(
+            child: SizedBox(
+              height: MediaQuery.of(context).size.width*0.1,
+              width: MediaQuery.of(context).size.width*0.9,
+              child: TextField(
+                style: TextStyle(color: Colors.grey),
+                //textAlign: TextAlign.start,
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Color(0xffF6F6F6),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                    borderSide: BorderSide(
+                      color: Color(0xff2b2b2b),
+                      width: 1.0,
                     ),
-                    hintText: "장소명 또는 주소를 입력하세요.",
-                    prefixIcon: Icon(Icons.search),
-                    //prefixIconColor: Colors.grey,
                   ),
+                  hintText: "장소명 또는 주소를 입력하세요.",
+                  prefixIcon: Icon(Icons.search),
+                  //prefixIconColor: Colors.grey,
                 ),
               ),
             ),
-          ],
-        ),
+          ),
+        ],
+      ),
 
     );
   }

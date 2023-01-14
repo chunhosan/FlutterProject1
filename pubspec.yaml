@@ -98,6 +98,7 @@ flutter:
    - assets/coolicon7.png
    - assets/coolicon8.png
    - assets/coolicon9.png
+   - assets/fooddetailmap.png
    - assets/#image (1).png
    - assets/#image (2).png
    - assets/#image (3).png
@@ -132,6 +133,44 @@ flutter:
    - assets/#image (32).png
    - assets/#image (33).png
    - assets/#image (34).png
+   - assets/plusimage/plusimage1/plusimage1-1.jpg
+   - assets/plusimage/plusimage1/plusimage1-2.jpg
+   - assets/plusimage/plusimage1/plusimage1-3.jpg
+   - assets/plusimage/plusimage1/plusimage1-4.jpg
+   - assets/plusimage/plusimage2/plusimage2-1.png
+   - assets/plusimage/plusimage2/plusimage2-2.jpg
+   - assets/plusimage/plusimage2/plusimage2-3.jpg
+   - assets/plusimage/plusimage2/plusimage2-4.jpg
+   - assets/plusimage/plusimage3/plusimage3-1.jpg
+   - assets/plusimage/plusimage3/plusimage3-2.jpg
+   - assets/plusimage/plusimage3/plusimage3-3.jpg
+   - assets/plusimage/plusimage3/plusimage3-4.jpg
+   - assets/plusimage/plusimage4/plusimage4-1.jpg
+   - assets/plusimage/plusimage4/plusimage4-2.jpg
+   - assets/plusimage/plusimage4/plusimage4-3.jpg
+   - assets/plusimage/plusimage4/plusimage4-4.jpg
+   - assets/nowimage/nowimage1/nowimage1-1.jpg
+   - assets/nowimage/nowimage1/nowimage1-2.jpg
+   - assets/nowimage/nowimage1/nowimage1-3.jpg
+   - assets/nowimage/nowimage2/nowimage2-1.jpg
+   - assets/nowimage/nowimage2/nowimage2-2.jpg
+   - assets/nowimage/nowimage2/nowimage2-3.jpg
+   - assets/nowimage/nowimage3/nowimage3-1.jpeg
+   - assets/nowimage/nowimage3/nowimage3-2.png
+   - assets/nowimage/nowimage3/nowimage3-3.jpeg
+   - assets/nowimage/nowimage4/nowimage4-1.jpg
+   - assets/nowimage/nowimage4/nowimage4-2.jpg
+   - assets/nowimage/nowimage4/nowimage4-3.jpg
+   - assets/nowimage/nowimage5/nowimage5-1.jpg
+   - assets/nowimage/nowimage5/nowimage5-2.jpg
+   - assets/nowimage/nowimage5/nowimage5-3.jpg
+   - assets/userimage/userimage1/userimage1-1.jpg
+   - assets/userimage/userimage1/userimage1-2.jpg
+   - assets/userimage/userimage1/userimage1-3.jpg
+   - assets/userimage/userimage2/userimage2-1.jpg
+   - assets/userimage/userimage2/userimage2-2.jpg
+   - assets/userimage/userimage2/userimage2-3.jpg
+   -
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

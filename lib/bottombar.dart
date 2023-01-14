@@ -1,3 +1,4 @@
+import 'package:app1/food_screen2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'user_screen.dart';
@@ -18,7 +19,8 @@ class _bottombar extends State<bottombar> {
   // 0번 foodscreen , 1번
 
   final screens =[
-    FoodScreen(),
+    //FoodScreen(),
+    FoodScreen2(),
     MapScreen(),
     PlusScreen(),
     //ChatScreen2(),
