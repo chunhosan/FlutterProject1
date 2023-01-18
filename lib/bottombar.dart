@@ -34,6 +34,7 @@ class _bottombar extends State<bottombar> {
   Widget build(BuildContext context) {
     return Scaffold(
 
+
         body: screens[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -44,26 +45,26 @@ class _bottombar extends State<bottombar> {
           showUnselectedLabels: false,
           items: const [
             BottomNavigationBarItem(
-              label: 'dd',
+              label: 'home',
               icon: Icon(Icons.home),
             ),
             BottomNavigationBarItem(
-              label: 'ddd',
+              label: 'map',
               icon: Icon(Icons.location_pin),
               backgroundColor: Colors.white,
             ),
             BottomNavigationBarItem(
-              label: 'dddd',
+              label: 'plus',
               icon: Icon(Icons.add_circle_rounded),
               backgroundColor: Colors.white,
             ),
             BottomNavigationBarItem(
-              label: 'dddddd',
+              label: 'chat',
               icon: Icon(Icons.message),
               backgroundColor: Colors.white,
             ),
             BottomNavigationBarItem(
-              label: 'dddeu',
+              label: 'user',
               icon: Icon(Icons.supervised_user_circle),
               backgroundColor: Colors.white,
             ),

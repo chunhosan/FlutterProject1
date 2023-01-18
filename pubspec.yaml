@@ -46,6 +46,8 @@ dependencies:
   font_awesome_flutter: ^10.3.0
   shared_preferences: ^2.0.15
   carousel_slider: ^4.2.1
+  flutter_rating_bar: ^4.0.1
+  modal_progress_hud_nsn: ^0.3.0
   # flutter_breadcrumb: ^1.0.1
 
 
@@ -133,6 +135,11 @@ flutter:
    - assets/#image (32).png
    - assets/#image (33).png
    - assets/#image (34).png
+   - assets/iconimage/apple.png
+   - assets/iconimage/facebook.png
+   - assets/iconimage/google.png
+   - assets/iconimage/kakao.png
+   - assets/iconimage/naver.png
    - assets/plusimage/plusimage1/plusimage1-1.jpg
    - assets/plusimage/plusimage1/plusimage1-2.jpg
    - assets/plusimage/plusimage1/plusimage1-3.jpg

@@ -760,7 +760,9 @@ class PlusHeader extends StatelessWidget{
             child: SizedBox(
               height: MediaQuery.of(context).size.width*0.1,
               width: MediaQuery.of(context).size.width*0.9,
-              child: TextField(
+              child: TextFormField(
+                textAlignVertical: TextAlignVertical.bottom,
+                textAlign: TextAlign.start,
                 style: TextStyle(color: Colors.grey),
                 //textAlign: TextAlign.start,
                 decoration: InputDecoration(

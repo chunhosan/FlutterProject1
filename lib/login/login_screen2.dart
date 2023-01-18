@@ -1,18 +1,21 @@
 import 'package:app1/bottombar.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class LoginScreen2 extends StatefulWidget {
+  const LoginScreen2({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _LoginScreenState2 createState() => _LoginScreenState2();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _LoginScreenState2 extends State<LoginScreen2> {
   final _authentication = FirebaseAuth.instance;
-
   bool isSignupScreen = true;
+  bool showSpinner = false;
   final _formKey = GlobalKey<FormState>();
   String userName = '';
   String userEmail = '';
@@ -28,87 +31,88 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Palette.backgroundColor,
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: Stack(
-          children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              child: Container(
-                height: 300,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                      image: AssetImage('image/red.jpg'), fit: BoxFit.fill),
-                ),
-                child: Container(
-                  padding: EdgeInsets.only(top: 90, left: 20),
+      resizeToAvoidBottomInset: false,
+      //backgroundColor: Palette.backgroundColor,
+      backgroundColor: Colors.white,
+      body: ModalProgressHUD(
+        inAsyncCall: showSpinner,
+        child: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          /*child: Container(
+            height: MediaQuery.of(context).size.height*0.5,
+            /*decoration: BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/nowimage/nowimage4/nowimage4-1.jpg'), fit: BoxFit.fill),
+                  ),*/
+            child: Container(
+              padding: EdgeInsets.only(top: 90, left: 20),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Center(
+                    child: Image.asset('assets/logo.png',height: 100,width: 100,),
+                  ),
+                  Center(
+                    child: Text('TWENTY\nSPOT',textAlign: TextAlign.center,style: TextStyle(
+                      letterSpacing: 1.0,
+                      fontSize: 50,
+                      color: Color(0xff2E3A59),
+                      fontWeight: FontWeight.bold,
+                    ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 100.0,
+                  ),
+                ],
+              ),
+            ),
+          ),*/
+          child: Column(
+            children: [
+              Container(
+                  padding: EdgeInsets.only(top: 50, left: 20),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          text: 'Welcome',
-                          style: TextStyle(
-                              letterSpacing: 1.0,
-                              fontSize: 25,
-                              color: Colors.white),
-                          children: [
-                            TextSpan(
-                              text:
-                              isSignupScreen ? ' to Yummy chat!' : ' back',
-                              style: TextStyle(
-                                letterSpacing: 1.0,
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          ],
-                        ),
+                      Center(
+                        child: Image.asset('assets/logo.png',height: 100,width: 100,),
                       ),
-                      SizedBox(
-                        height: 5.0,
-                      ),
-                      Text(
-                        isSignupScreen
-                            ? 'Signup to continue'
-                            : 'Signin to continue',
-                        style: TextStyle(
+                      Center(
+                        child: Text('TWENTY\nSPOT',textAlign: TextAlign.center,style: TextStyle(
                           letterSpacing: 1.0,
-                          color: Colors.white,
+                          fontSize: 50,
+                          color: Color(0xff2E3A59),
+                          fontWeight: FontWeight.bold,
+                        ),
                         ),
                       ),
                     ],
                   ),
                 ),
+              SizedBox(
+                height: MediaQuery.of(context).size.height*0.05,
               ),
-            ),
-            //배경
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeIn,
-              top: 180,
-              child: AnimatedContainer(
+              //로그인 박스
+              AnimatedContainer(
                 duration: Duration(milliseconds: 500),
                 curve: Curves.easeIn,
                 padding: EdgeInsets.all(20.0),
-                height: isSignupScreen ? 280.0 : 250.0,
-                width: MediaQuery.of(context).size.width - 40,
+                //height: isSignupScreen ? 250.0 : 220.0,
+                height: isSignupScreen ? MediaQuery.of(context).size.height*0.3 : MediaQuery.of(context).size.height*0.25,
+                width: MediaQuery.of(context).size.width*1,
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(15.0),
-                  boxShadow: [
+                  /*boxShadow: [
                     BoxShadow(
-                        color: Colors.black.withOpacity(0.3),
+                        color: Colors.black.withOpacity(0.05),
                         blurRadius: 15,
                         spreadRadius: 5),
-                  ],
+                  ],*/
                 ),
                 child: SingleChildScrollView(
                   padding: EdgeInsets.only(bottom: 20),
@@ -126,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Column(
                               children: [
                                 Text(
-                                  'LOGIN',
+                                  '로그인',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -153,7 +157,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             child: Column(
                               children: [
                                 Text(
-                                  'SIGNUP',
+                                  '회원가입',
                                   style: TextStyle(
                                       fontSize: 16,
                                       fontWeight: FontWeight.bold,
@@ -184,7 +188,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   key: ValueKey(1),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 4) {
-                                      return 'Please enter at least 4 characters';
+                                      return '4자 이상 입력해주세요';
                                     }
                                     return null;
                                   },
@@ -213,7 +217,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Radius.circular(35.0),
                                         ),
                                       ),
-                                      hintText: 'User name',
+                                      hintText: '이름',
                                       hintStyle: TextStyle(
                                           fontSize: 14,
                                           color: Palette.textColor1),
@@ -228,7 +232,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         !value.contains('@')) {
-                                      return 'Please enter a valid email address.';
+                                      return '유효한 이메일 주소를 입력하세요.';
                                     }
                                     return null;
                                   },
@@ -257,7 +261,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Radius.circular(35.0),
                                         ),
                                       ),
-                                      hintText: 'email',
+                                      hintText: '이메일',
                                       hintStyle: TextStyle(
                                           fontSize: 14,
                                           color: Palette.textColor1),
@@ -271,7 +275,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   key: ValueKey(3),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
-                                      return 'Password must be at least 7 characters long.';
+                                      return '비밀번호는 7자 이상이어야 합니다.';
                                     }
                                     return null;
                                   },
@@ -300,7 +304,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Radius.circular(35.0),
                                         ),
                                       ),
-                                      hintText: 'password',
+                                      hintText: '비밀번호',
                                       hintStyle: TextStyle(
                                           fontSize: 14,
                                           color: Palette.textColor1),
@@ -322,7 +326,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   validator: (value) {
                                     if (value!.isEmpty ||
                                         !value.contains('@')) {
-                                      return 'Please enter a valid email address.';
+                                      return '유효한 이메일 주소를 입력하세요.';
                                     }
                                     return null;
                                   },
@@ -351,7 +355,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Radius.circular(35.0),
                                         ),
                                       ),
-                                      hintText: 'email',
+                                      hintText: '이메일',
                                       hintStyle: TextStyle(
                                           fontSize: 14,
                                           color: Palette.textColor1),
@@ -364,7 +368,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   key: ValueKey(5),
                                   validator: (value) {
                                     if (value!.isEmpty || value.length < 6) {
-                                      return 'Password must be at least 7 characters long.';
+                                      return '비밀번호는 7자 이상이어야 합니다.';
                                     }
                                     return null;
                                   },
@@ -393,7 +397,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                           Radius.circular(35.0),
                                         ),
                                       ),
-                                      hintText: 'password',
+                                      hintText: '비밀번호',
                                       hintStyle: TextStyle(
                                           fontSize: 14,
                                           color: Palette.textColor1),
@@ -407,135 +411,239 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
-            ),
-            //텍스트 폼 필드
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeIn,
-              top: isSignupScreen ? 430 : 390,
-              right: 0,
-              left: 0,
-              child: Center(
-                child: Container(
-                  padding: EdgeInsets.all(15),
-                  height: 90,
-                  width: 90,
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50)),
-                  child: GestureDetector(
-                    onTap: () async {
-                      if (isSignupScreen) {
-                        _tryValidation();
 
-                        try {
-                          final newUser = await _authentication
-                              .createUserWithEmailAndPassword(
-                            email: userEmail,
-                            password: userPassword,
-                          );
+              //텍스트 폼 필드
+              Center(
+                  child: Container(
+                    padding: EdgeInsets.all(16),
+                    height: MediaQuery.of(context).size.height*0.1,
+                    width: MediaQuery.of(context).size.width*0.95,
+                    child: GestureDetector(
+                      onTap: () async {
+                        setState(() {
+                          showSpinner = true;
+                        });
+                        if (isSignupScreen) {
+                          _tryValidation();
 
-                          if (newUser.user != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return bottombar();
-                                },
+                          try {
+                            final newUser = await _authentication
+                                .createUserWithEmailAndPassword(
+                              email: userEmail,
+                              password: userPassword,
+                            );
+                            /*await newUser.user?.updateDisplayName(userName);
+                            await newUser.user?.updateDisplayName('${userName}');
+                            User? user2 = newUser.user;
+                            user2?.updateDisplayName('${userName}');
+                            User user = await _authentication.currentUser!;
+                            user.updateDisplayName(userName);
+                            await user.reload();*/
+
+
+                            /*await FirebaseFirestore.instance.collection('user').doc(newUser.user!.uid)
+                                .set({
+                              'displayName' : userName,
+                              'email' : userEmail
+                            });*/
+                            User? user = newUser.user;
+                            if (newUser.user != null) {
+                              user?.updateDisplayName(userName);
+                              //await user?.reload();
+                              user = await _authentication.currentUser;
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return bottombar();
+                                  },
+                                ),
+                              );
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
+                          } catch (e) {
+                            setState(() {
+                              showSpinner = false;
+                            });
+                            print(e);
+
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              SnackBar(
+                                content:
+                                Text('이메일과 비밀번호를 확인해주세요'),
+                                backgroundColor: Colors.blue,
                               ),
                             );
                           }
-                        } catch (e) {
-                          print(e);
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content:
-                              Text('Please check your email and password'),
-                              backgroundColor: Colors.blue,
+                        }
+                        if (!isSignupScreen) {
+                          _tryValidation();
+
+                          try {
+                            final newUser =
+                            await _authentication.signInWithEmailAndPassword(
+                              email: userEmail,
+                              password: userPassword,
+                            );
+                            /*await newUser.user?.updateDisplayName(userName);
+                            await newUser.user?.updateDisplayName('${userName}');
+                            User? user2 = newUser.user;
+                            user2?.updateDisplayName('${userName}');
+                            User user = await _authentication.currentUser!;
+                            user.updateDisplayName(userName);
+                            await user.reload();*/
+                            //User? user = newUser.user;
+                            if (newUser.user != null) {
+                              /*user?.updateDisplayName(userName);
+                              //await user?.reload();
+                              user = await _authentication.currentUser;*/
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) {
+                                    return bottombar();
+                                  },
+                                ),
+                              );
+                              setState(() {
+                                showSpinner = false;
+                              });
+                            }
+                          }catch(e){
+                            setState(() {
+                              showSpinner = false;
+                            });
+                            print(e);
+                          }
+                        }
+                      },
+                      child: Container(
+                        decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                              colors: [Color(0xff5DB075), Color(0xff33de90)],
+                              begin: Alignment.topLeft,
+                              end: Alignment.bottomRight),
+                          borderRadius: BorderRadius.circular(30),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.3),
+                              spreadRadius: 1,
+                              blurRadius: 1,
+                              offset: Offset(0, 1),
                             ),
-                          );
-                        }
-                      }
-                      if (!isSignupScreen) {
-                        _tryValidation();
-
-                        try {
-                          final newUser =
-                          await _authentication.signInWithEmailAndPassword(
-                            email: userEmail,
-                            password: userPassword,
-                          );
-                          if (newUser.user != null) {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) {
-                                  return bottombar();
-                                },
-                              ),
-                            );
-                          }
-                        }catch(e){
-                          print(e);
-                        }
-                      }
-                    },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.orange, Colors.red],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        borderRadius: BorderRadius.circular(30),
-                        boxShadow: [
-                          BoxShadow(
-                            color: Colors.black.withOpacity(0.3),
-                            spreadRadius: 1,
-                            blurRadius: 1,
-                            offset: Offset(0, 1),
-                          ),
-                        ],
-                      ),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
+                          ],
+                        ),
+                        child: Icon(
+                          Icons.arrow_forward,
+                          color: Colors.white,
+                        ),
                       ),
                     ),
                   ),
                 ),
-              ),
-            ),
-            //전송버튼
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 500),
-              curve: Curves.easeIn,
-              top: isSignupScreen
-                  ? MediaQuery.of(context).size.height - 125
-                  : MediaQuery.of(context).size.height - 165,
-              right: 0,
-              left: 0,
-              child: Column(
-                children: [
-                  Text(isSignupScreen ? 'or Signup with' : 'or Signin with'),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  TextButton.icon(
-                    onPressed: () {},
-                    style: TextButton.styleFrom(
-                        primary: Colors.white,
-                        minimumSize: Size(155, 40),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20)),
-                        backgroundColor: Palette.googleColor),
-                    icon: Icon(Icons.add),
-                    label: Text('Google'),
-                  ),
-                ],
-              ),
-            ),
-            //구글 로그인 버튼
-          ],
+
+              //구글 전송버튼
+              Column(
+                  children: [
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.01,
+                    ),
+                    Text('OR'),
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.03,
+                    ),
+                    Text(isSignupScreen ? 'SNS 계정으로 회원가입' : 'SNS 계정으로 로그인'),
+                    /*TextButton.icon(
+                      onPressed: () {
+                        //GoogleProviderConfiguration(clientId: '442816396250-dapnvtnpsg0chtr1a5m9228qt9c9bhie.apps.googleusercontent.com');
+                      },
+                      style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20)),
+                          backgroundColor: Palette.googleColor),
+                      icon: Icon(Icons.add),
+                      label: Text('Google'),
+                    ),*/
+                    SizedBox(
+                      height: MediaQuery.of(context).size.height*0.005,
+                    ),
+                    Row(
+                      children: [
+                        SizedBox(
+                          width: MediaQuery.of(context).size.width*0.17,
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height*0.07,
+                          width: MediaQuery.of(context).size.width*0.13,
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            shape: BoxShape.circle
+                          ),
+                          child: TextButton(
+                            onPressed: (){},
+                            child: Image.asset('assets/iconimage/google.png',fit: BoxFit.fill,),
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height*0.07,
+                          width: MediaQuery.of(context).size.width*0.13,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle
+                          ),
+                          child: TextButton(
+                            onPressed: (){},
+                            child: Image.asset('assets/iconimage/facebook.png',fit: BoxFit.fill,),
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height*0.07,
+                          width: MediaQuery.of(context).size.width*0.13,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle
+                          ),
+                          child: TextButton(
+                            onPressed: (){},
+                            child: Image.asset('assets/iconimage/naver.png',fit: BoxFit.fill,),
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height*0.07,
+                          width: MediaQuery.of(context).size.width*0.13,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle
+                          ),
+                          child: TextButton(
+                            onPressed: (){},
+                            child: Image.asset('assets/iconimage/kakao.png',fit: BoxFit.fill,),
+
+                          ),
+                        ),
+                        Container(
+                          height: MediaQuery.of(context).size.height*0.07,
+                          width: MediaQuery.of(context).size.width*0.13,
+                          decoration: BoxDecoration(
+                              color: Colors.white,
+                              shape: BoxShape.circle
+                          ),
+                          child: TextButton(
+                            onPressed: (){},
+                            child: Image.asset('assets/iconimage/apple.png',fit: BoxFit.fill,),
+                          ),
+                        ),
+
+                      ],
+                    )
+                  ],
+                ),
+
+            ],
+          ),
         ),
       ),
     );

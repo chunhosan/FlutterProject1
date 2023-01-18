@@ -423,9 +423,11 @@ class MapHeader extends StatelessWidget {
                 left: MediaQuery.of(context).size.width * 0.01,
 
                 child: SizedBox(
-                  width: 360,
-                  height: 33,
-                  child: TextField(
+                  height: MediaQuery.of(context).size.height*0.04,
+                  width: MediaQuery.of(context).size.width*0.9,
+                  child: TextFormField(
+                    textAlignVertical: TextAlignVertical.bottom,
+                    textAlign: TextAlign.start,
                     style: TextStyle(color: Colors.grey),
                     //textAlign: TextAlign.start,
                     decoration: InputDecoration(

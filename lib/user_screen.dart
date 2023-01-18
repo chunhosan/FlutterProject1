@@ -1,11 +1,14 @@
+import 'package:app1/login/login_screen.dart';
 import 'package:app1/menu/center_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:app1/menu/setting_screen.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'login/login_screen2.dart';
 import 'menu/faq.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -13,6 +16,29 @@ class UserScreen extends StatefulWidget {
 }
 
 class _UserScreenState extends State<UserScreen> {
+  var currentUser = FirebaseAuth.instance.currentUser;
+  final _authentication = FirebaseAuth.instance;
+  User? loggedUser;
+
+  @override
+  void initState() {
+    super.initState();
+    getCurrentUser();
+  }
+
+  void getCurrentUser(){
+    try {
+      final user = _authentication.currentUser;
+      if (user != null) {
+        loggedUser = user;
+        print(loggedUser!.email);
+        print(loggedUser!.displayName);
+      }
+    }catch(e){
+      print(e);
+    }
+  }
+
   static List<String> userimage1 = [
     'assets/userimage/userimage1/userimage1-1.jpg',
     'assets/userimage/userimage1/userimage1-2.jpg',
@@ -45,9 +71,10 @@ class _UserScreenState extends State<UserScreen> {
                   backgroundColor: Colors.white,
                 )*/
               ],
-              accountName: Text('천호산',style: TextStyle(color: Colors.black),),
+              //accountName: Text('${loggedUser?.displayName}',style: TextStyle(color: Colors.black),),
+              accountName: Text('${FirebaseAuth.instance.currentUser!.displayName}',style: TextStyle(color: Colors.black),),
               arrowColor: Colors.black,
-              accountEmail: Text('chunhosan07@gmail.com',style: TextStyle(color: Colors.black),),
+              accountEmail: Text('${FirebaseAuth.instance.currentUser!.email}',style: TextStyle(color: Colors.black),),
               onDetailsPressed: () {
                 print('arrow is clicked');
               },
@@ -100,9 +127,12 @@ class _UserScreenState extends State<UserScreen> {
               leading: Icon(Icons.login_outlined, color: Colors.grey[850]),
               title: Text('로그아웃'),
               onTap: () {
-                FirebaseAuth.instance.signOut();
+                _authentication.signOut();
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: ((context)=> LoginScreen2())));
               },
               //trailing: Icon(Icons.add),
+
             ),
           ],
         ),
@@ -289,7 +319,7 @@ class _UserScreenState extends State<UserScreen> {
                             Icon(Icons.favorite_border),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                              child: Icon(Icons.messenger_outline),
+                              child: Icon(Icons.messenger_line),
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(8,0,0,0),
@@ -387,21 +417,28 @@ class _UserScreenState extends State<UserScreen> {
                   ],
                 ),
                 SizedBox(
-                  height: MediaQuery.of(context).size.height*0.01,
+                  height: MediaQuery.of(context).size.height*0.02,
                 ),
-                Text('천호산',
+                Text('${FirebaseAuth.instance.currentUser!.displayName}',
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
-                    fontSize: 25,
+                    fontSize: 30,
+                  ),),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height*0.01,
+                ),
+                Text('${FirebaseAuth.instance.currentUser!.email}',
+                  style: TextStyle(
+                    fontSize: 13,
                   ),),
                 SizedBox(
                   height: MediaQuery.of(context).size.height*0.02,
                 ),
-                Text('컴퓨터공학부 전공',
+                /*Text('컴퓨터공학부 전공',
                   style: TextStyle(
                     fontSize: 15,
                     fontWeight: FontWeight.bold,
-                  ),),
+                  ),),*/
               ],
             ),
           ),
@@ -418,6 +455,24 @@ class _UserScreenState extends State<UserScreen> {
                             (context, index) => Card(
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height*0.01,
+                              ),
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                                    child: Text(
+                                      '최근 포스팅',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                               SizedBox(
                                 height: MediaQuery.of(context).size.height*0.02,
                               ),
@@ -793,6 +848,119 @@ class _UserScreenState extends State<UserScreen> {
                                   ),
                                 ],
                               ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                            ],
+                          ),
+                        ),
+                      )),
+                  SliverList(
+                      delegate: SliverChildBuilderDelegate(
+                        childCount: 1,
+                            (context, index) => Card(
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.fromLTRB(10,10,0,0),
+                                    child: Text(
+                                      '최근 리뷰',
+                                      style: TextStyle(
+                                        fontSize: 15,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height*0.01,
+                              ),
+                              //NPIMAGE
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: Image.asset('assets/profile2.png'),
+                                        ),
+                                      ),
+                                      /*onTap: (){
+                                        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FoodDetail(foodDataModel: Nowdata[1],)));
+                                      }*/
+                                    ),
+                                  ),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(5,10,0,0),
+                                          child: Text(
+                                            '${FirebaseAuth.instance.currentUser!.displayName}',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(5,10,0,0),
+                                          child: Text(
+                                            '맛있었어요!',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        ),
+
+
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(60,10,0,0),
+                                        child: Text(
+                                          '8m ago',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 10,
+                                          ),),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        /*child: Image.asset('assets/coolicon8.png'),*/
+                                        child: RatingBar.builder(
+                                          initialRating: 4,
+                                          minRating: 5,
+                                          itemSize: 20,
+                                          itemBuilder: (context,_) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating){},
+                                        ),
+
+                                      ),
+                                    ],
+                                  )
+                                ],
+                              ),
+
                               SizedBox(
                                 height: 20,
                               ),

@@ -158,7 +158,7 @@ class FAQ extends StatelessWidget{
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20,0,0,0),
                         child: Text('교환이나 반품은 어떻게 하나요?',
-                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
                       ),
                     ],
                   ),
@@ -186,8 +186,8 @@ class FAQ extends StatelessWidget{
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20,0,0,0),
-                        child: Text('교환이나 반품(환불) 받고 싶어요.',
-                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+                        child: Text('교환이나 반품(환불) \n받고 싶어요.',
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
                       ),
                     ],
                   ),
@@ -216,7 +216,7 @@ class FAQ extends StatelessWidget{
                       Padding(
                         padding: const EdgeInsets.fromLTRB(20,0,0,0),
                         child: Text('주문을 취소/반품하면 바로 환불 \n받을 수 있나요?',
-                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 20)),
+                            style: TextStyle(fontWeight: FontWeight.bold,fontSize: 18)),
                       ),
                     ],
                   ),
