@@ -1,12 +1,12 @@
-import 'package:app1/food_screen2.dart';
+import 'package:app1/home/food_screen2.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'user_screen.dart';
-import 'food_screen.dart';
-import 'map_screen.dart';
-import 'plus_screen.dart';
-import 'chat_screen.dart';
-import 'chat_screen2.dart';
+import '../user/user_screen.dart';
+import '../home/food_screen.dart';
+import '../map/map_screen.dart';
+import '../plus/plus_screen.dart';
+import '../chat/chat_screen.dart';
+import '../chat/chat_screen2.dart';
 
 class bottombar extends StatefulWidget {
   @override
@@ -19,7 +19,7 @@ class _bottombar extends State<bottombar> {
   // 0번 foodscreen , 1번
 
   final screens =[
-    //FoodScreen(),
+
     FoodScreen2(),
     MapScreen(),
     PlusScreen(),
@@ -28,13 +28,12 @@ class _bottombar extends State<bottombar> {
     UserScreen(),
 
 
+
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
-
         body: screens[currentIndex],
         bottomNavigationBar: BottomNavigationBar(
           type: BottomNavigationBarType.fixed,
@@ -68,6 +67,7 @@ class _bottombar extends State<bottombar> {
               icon: Icon(Icons.supervised_user_circle),
               backgroundColor: Colors.white,
             ),
+
           ],
           onTap: (index) {
             setState(() {

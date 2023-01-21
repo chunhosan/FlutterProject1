@@ -1,7 +1,8 @@
-import 'package:flutter/cupertino.dart';
+/*import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
+
 String _name = 'Your Name';
 
 class ChatMessage extends StatelessWidget {
@@ -202,5 +203,5 @@ class _ChatScreenState2 extends State<ChatScreen2> with TickerProviderStateMixin
       message.animationController.dispose();
     super.dispose();
   }
-}
+}*/
 

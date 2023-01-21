@@ -1,4 +1,4 @@
-import 'package:app1/bottombar.dart';
+import 'package:app1/bottombar/bottombar.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -93,7 +93,7 @@ class _LoginScreenState2 extends State<LoginScreen2> {
                   ),
                 ),
               SizedBox(
-                height: MediaQuery.of(context).size.height*0.05,
+                height: MediaQuery.of(context).size.height*0.03,
               ),
               //로그인 박스
               AnimatedContainer(
@@ -101,7 +101,7 @@ class _LoginScreenState2 extends State<LoginScreen2> {
                 curve: Curves.easeIn,
                 padding: EdgeInsets.all(20.0),
                 //height: isSignupScreen ? 250.0 : 220.0,
-                height: isSignupScreen ? MediaQuery.of(context).size.height*0.3 : MediaQuery.of(context).size.height*0.25,
+                height: isSignupScreen ? MediaQuery.of(context).size.height*0.32 : MediaQuery.of(context).size.height*0.25,
                 width: MediaQuery.of(context).size.width*1,
                 margin: EdgeInsets.symmetric(horizontal: 20.0),
                 decoration: BoxDecoration(

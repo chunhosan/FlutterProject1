@@ -12,7 +12,7 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: PreferredSize(
+      /*appBar: PreferredSize(
         child: AppBar(
           elevation: 0,
           backgroundColor: Color(0xffffffff),
@@ -36,55 +36,90 @@ class _ChatScreenState extends State<ChatScreen> {
           /*leading: */
           //flexibleSpace: PlusHeader(),
         ),preferredSize: Size.fromHeight(MediaQuery.of(context).size.height*0.1),
-      ),
-      
-      body: StreamBuilder<List<MessageModel>>(
-        stream: streamMessages(), //중계하고 싶은 Stream을 넣는다.
-        builder: (context, asyncSnapshot) {
-          if (!asyncSnapshot.hasData) {
-            //데이터가 없을 경우 로딩위젯을 표시한다.
-            return const Center(child: CircularProgressIndicator());
-          } else if (asyncSnapshot.hasError) {
-            return const Center(
-              child: Text('오류가 발생했습니다.'),
-            );
-          } else {
-            List<MessageModel> messages = asyncSnapshot.data!;
-            //비동기 데이터가 존재할 경우 리스트뷰 표시
-            return Column(
-              mainAxisSize: MainAxisSize.max,
+      ),*/
+      body: Column(
+        children: [
+          Container(
+            height: MediaQuery.of(context).size.height * 0.13,
+            width: double.maxFinite,
+            decoration: BoxDecoration(
+              color: Color(0xffffffff),
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+            ),
+            child: Column(
+              //crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Expanded(
-                    child: ListView.builder(
-                      // 상위 위젯의 크기를 기준으로 잡는게 아닌 자식위젯의 크기를 기준으로 잡음
-                        itemCount: messages.length,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                              padding: EdgeInsets.fromLTRB(10,10,150,20),
-                              child: Align(
-                                alignment: Alignment.centerLeft,
-                                child: DecoratedBox(
-                                    decoration: BoxDecoration(
-                                      color: Colors.grey[200],
-                                      borderRadius: BorderRadius.circular(16),
-                                    ),
-                                    child: Padding(
-                                      padding: EdgeInsets.fromLTRB(0,0,10,0),
-                                      child: ListTile(
-                                        title: Text(messages[index].content),
-                                        subtitle: Text(messages[index].sendDate.toDate().toLocal().toString().substring(5,16)),
-                                      ),
-                                    )
-                                ),
-                              ),
-                            );
-                        }),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.05,
                 ),
-                getInputWidget()
+                Text('Community',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 40,
+                  ),),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height * 0.01,
+                ),
               ],
-            );
-          }
-        },
+            ),
+          ),
+          Expanded(
+            child: Container(
+              child: StreamBuilder<List<MessageModel>>(
+                stream: streamMessages(), //중계하고 싶은 Stream을 넣는다.
+                builder: (context, asyncSnapshot) {
+                  if (!asyncSnapshot.hasData) {
+                    //데이터가 없을 경우 로딩위젯을 표시한다.
+                    return const Center(child: CircularProgressIndicator());
+                  } else if (asyncSnapshot.hasError) {
+                    return const Center(
+                      child: Text('오류가 발생했습니다.'),
+                    );
+                  } else {
+                    List<MessageModel> messages = asyncSnapshot.data!;
+                    //비동기 데이터가 존재할 경우 리스트뷰 표시
+                    return Column(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        Expanded(
+                          child: ListView.builder(
+                            // 상위 위젯의 크기를 기준으로 잡는게 아닌 자식위젯의 크기를 기준으로 잡음
+                              itemCount: messages.length,
+                              itemBuilder: (context, index) {
+                                return Padding(
+                                  padding: EdgeInsets.fromLTRB(10,10,150,20),
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          color: Colors.grey[200],
+                                          borderRadius: BorderRadius.circular(16),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(0,0,10,0),
+                                          child: ListTile(
+                                            title: Text(messages[index].content),
+                                            subtitle: Text(messages[index].sendDate.toDate().toLocal().toString().substring(5,16)),
+                                          ),
+                                        )
+                                    ),
+                                  ),
+                                );
+                              }),
+                        ),
+                        getInputWidget()
+                      ],
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+
+        ],
       ),
     );
   }
@@ -120,7 +155,7 @@ class _ChatScreenState extends State<ChatScreen> {
                 controller: controller,
                 decoration: InputDecoration(
                   labelStyle: TextStyle(fontSize: 15),
-                  labelText: "내용을 입력하세요..",
+                  labelText: "자유롭게 내용을 입력하세요..",
                   fillColor: Colors.white,
                   focusedBorder: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(25.0),
@@ -207,9 +242,9 @@ class MessageModel {
   //서버로부터 map형태의 자료를 MessageModel형태의 자료로 변환해주는 역할을 수행함.
   factory MessageModel.fromMap({required String id,required Map<String,dynamic> map}){
     return MessageModel(
-        id: id,
-        content: map['content']??'',
-        sendDate: map['sendDate']??Timestamp(0, 0),
+      id: id,
+      content: map['content']??'',
+      sendDate: map['sendDate']??Timestamp(0, 0),
     );
   }
 

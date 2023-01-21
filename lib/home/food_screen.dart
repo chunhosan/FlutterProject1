@@ -1,5 +1,6 @@
 import 'dart:core';
 import 'dart:math';
+import 'package:app1/bottombar/bottombar.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -7,21 +8,24 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 
+import 'alarm_screen.dart';
 
-class FoodScreen2 extends StatefulWidget {
+class FoodScreen extends StatefulWidget {
   @override
-  _FoodScreenState2 createState() => _FoodScreenState2();
+  _FoodScreenState createState() => _FoodScreenState();
 }
 
-class _FoodScreenState2 extends State<FoodScreen2> {
+class _FoodScreenState extends State<FoodScreen> {
   var currentUser = FirebaseAuth.instance.currentUser;
   final _authentication = FirebaseAuth.instance;
   User? loggedUser;
+  List<Map<String, dynamic>> foundMap = [];
 
   @override
   void initState() {
     super.initState();
     getCurrentUser();
+    foundMap= gridMap;
   }
 
   void getCurrentUser(){
@@ -36,6 +40,28 @@ class _FoodScreenState2 extends State<FoodScreen2> {
       print(e);
     }
   }
+
+
+
+  void _runFilter1(String enteredKeyword) {
+    List<Map<String, dynamic>> results = [];
+    if (enteredKeyword.isEmpty) {
+      results = gridMap;
+    } else if(enteredKeyword.isNotEmpty){
+      results = gridMap
+          .where((user) =>
+      //user["name"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+      user["map"].toLowerCase().contains(enteredKeyword.toLowerCase()))
+          .toList();
+    }
+    setState(() {
+      foundMap = results;
+    });
+  }
+  List<String> items = [
+    '서북구','성성동','성정동','불당동','두정동','봉정','동남구','유량동','청당동','신방동','안서동','문화동','구룡동','병천'
+  ];
+  String dropdownValue = '동남구';
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -64,8 +90,9 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                         child: SizedBox(
                           height: MediaQuery.of(context).size.height*0.05,
                           width: MediaQuery.of(context).size.width*0.54,
-                          child: TextFormField(
-                               textAlignVertical: TextAlignVertical.bottom,
+                          child: TextField(
+                            onChanged: (value) =>  _runFilter1(value),
+                            textAlignVertical: TextAlignVertical.bottom,
                             textAlign: TextAlign.start,
                             style: TextStyle(color: Colors.grey),
                             //textAlign: TextAlign.start,
@@ -80,7 +107,7 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                                   width: 1.0,
                                 ),
                               ),
-                              hintText: "검색어를 입력하세요.",
+                              hintText: "주소를 입력하세요.",
                               //prefixIcon: Icon(Icons.search),
                               //prefixIconColor: Colors.grey,
                             ),
@@ -97,8 +124,13 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5,0,0,0),
-                      child: Icon(Icons.notifications,size: 35,color: Colors.grey,),
+                        padding: const EdgeInsets.fromLTRB(0,0,0,3),
+                        child: IconButton(
+                          icon: Icon(Icons.notifications,size: 35,color: Colors.grey,),
+                          onPressed: (){
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Alarm()));
+                          },
+                        )
                     ),
                   ],
                 ),
@@ -111,7 +143,7 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                           Image.asset('assets/logo3.png'),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(8,0,0,0),
-                            child: Text("충청남도 천안시 동남구",
+                            child: Text("충청남도 천안시 ",
                               style: TextStyle(
                                 color: Colors.black,
                                 fontSize: 14.0,
@@ -119,13 +151,35 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                               ),
                             ),
                           ),
-                          Icon(
-                              Icons.arrow_drop_down_outlined
+                          DropdownButton<String>(
+                            underline: SizedBox.shrink(),
+                            value: dropdownValue,
+                            items: items.map<DropdownMenuItem<String>>((String value) {
+                              return DropdownMenuItem<String>(value: value, child: Text(value,
+                                style: TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.bold,
+                                ),),);
+                            }).toList(),
+                            onChanged: (String? newValue) {
+                              setState(() {
+                                dropdownValue = newValue ?? '';
+                              });
+                            },
                           ),
+
                           Spacer(),
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(0,0,30,0),
-                            child: Image.asset('assets/2km.png'),
+                            padding: const EdgeInsets.fromLTRB(0,0,10,0),
+                            child: TextButton(
+                              onPressed: (){
+                                Navigator.push(context, MaterialPageRoute(builder: (context) => bottombar()));
+
+                              },
+                              child: Image.asset('assets/coolicon9.png',fit: BoxFit.cover,),
+                            ),
+
                           ),
                         ],
                       ),
@@ -191,7 +245,7 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                           mainAxisSpacing:  20.0,
                           crossAxisSpacing: 15.0,
                         ),
-                        itemCount: gridMap.length,
+                        itemCount: foundMap.length,
                         itemBuilder: (_, index){
                           return Container(
                             decoration: BoxDecoration(
@@ -205,7 +259,7 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                                   InkWell(
                                       child: ClipRRect(
                                         child: Image.asset(
-                                          "${gridMap.elementAt(index)['images']}",
+                                          "${foundMap.elementAt(index)['images']}",
                                           height: MediaQuery.of(context).size.height*0.23,
                                           width: double.infinity,
                                           fit: BoxFit.fill,
@@ -222,7 +276,7 @@ class _FoodScreenState2 extends State<FoodScreen2> {
                                       crossAxisAlignment: CrossAxisAlignment.start,
                                       children:[
                                         Text(
-                                          "${gridMap.elementAt(index)['title']}",
+                                          "${foundMap.elementAt(index)['title']}",
                                           style: Theme.of(context).textTheme.subtitle1!.merge(
                                             TextStyle(
                                               fontWeight: FontWeight.w700,
@@ -1711,11 +1765,13 @@ class _FoodScreenState2 extends State<FoodScreen2> {
       => FoodDataModel('${nowpimage[index]}','${nowpname[index]}','${nowimage[index]}','${nowtitle[index]}',
           '${nowcontent[index]}','${nowpname[index]} Description...'));
   static List<Map<String,dynamic>> gridMap = [
-    {"title": "1   호수 매운탕", "price": "1", "images": "assets/#image (1).png",}, {"title": "2   고향산장", "price": "\$255", "images": "assets/#image (2).png",}, {"title": "3   맑음", "price": "\$255", "images": "assets/#image (3).png",}, {"title": "4   부에노", "price": "\$255", "images": "assets/#image (4).png",}, {"title": "5   아우내엄나무순대", "price": "\$255", "images": "assets/#image (5).png",}, {"title": "6   모미지", "price": "\$255", "images": "assets/#image (6).png",}, {"title": "7   포니벨라", "price": "\$255", "images": "assets/#image (7).png",}, {"title": "8   미소레 커피", "price": "\$255", "images": "assets/#image (8).png",}, {"title": "9   앙프", "price": "\$255", "images": "assets/#image (9).png",},
-    {"title": "10   청룡원조매운탕", "price": "\$255", "images": "assets/#image (10).png",}, {"title": "11   아우내한방순대", "price": "\$255", "images": "assets/#image (11).png",}, {"title": "12   대안식당", "price": "\$255", "images": "assets/#image (12).png",}, {"title": "13   페어리우드베이커리", "price": "\$255", "images": "assets/#image (13).png",}, {"title": "14   꽃분이네애견카페", "price": "\$255", "images": "assets/#image (14).png",}, {"title": "15   더몰트하우스", "price": "\$255", "images": "assets/#image (15).png",}, {"title": "16   천진", "price": "\$255", "images": "assets/#image (16).png",}, {"title": "17   들꽃", "price": "\$255", "images": "assets/#image (17).png",}, {"title": "18   충남집순대", "price": "\$255", "images": "assets/#image (18).png",}, {"title": "19   진성석갈비", "price": "\$255", "images": "assets/#image (19).png",},
-    {"title": "20   석산장", "price": "\$255", "images": "assets/#image (20).png",}, {"title": "21   밥상차려주는집", "price": "\$255", "images": "assets/#image (21).png",}, {"title": "22   이화갈비", "price": "\$255", "images": "assets/#image (22).png",}, {"title": "23   명동보리밥", "price": "\$255", "images": "assets/#image (23).png",}, {"title": "24   천안 등촌샤브칼국수", "price": "\$255", "images": "assets/#image (24).png",}, {"title": "25   기린더매운갈비찜", "price": "\$255", "images": "assets/#image (25).png",}, {"title": "26   카페시스터즈", "price": "\$255", "images": "assets/#image (26).png",}, {"title": "27   승지원", "price": "\$255", "images": "assets/#image (27).png",}, {"title": "28   정초밥", "price": "\$255", "images": "assets/#image (28).png",}, {"title": "29   여물통", "price": "\$255", "images": "assets/#image (29).png",},
-    {"title": "30   청화집", "price": "\$255", "images": "assets/#image (30).png",},
+    {"title": "1   호수 매운탕", "map": '충청남도 천안시 서북구 성성2길 61(성성동)', "images": "assets/#image (1).png",}, {"title": "2   고향산장", "map": '충청남도 천안시 동남구 북면 충절로 1474-19', "images": "assets/#image (2).png",}, {"title": "3   맑음", "map": '충청남도 천안시 동남구 유량로 194(유량동)', "images": "assets/#image (3).png",}, {"title": "4   부에노", "map": '충청남도 천안시 동남구 남부대로 336(청당동)', "images": "assets/#image (4).png",}, {"title": "5   아우내엄나무순대", "map": '충청남도 천안시 동남구 병천면 아우내순대길 1', "images": "assets/#image (5).png",}, {"title": "6   모미지", "map": '충청남도 천안시 서북구 서부대로 427', "images": "assets/#image (6).png",}, {"title": "7   포니벨라", "map": '충청남도 천안시 동남구 유량로 130(유량동)', "images": "assets/#image (7).png",}, {"title": "8   미소레 커피", "map": '충청남도 천안시 동남구 단대로 161-1', "images": "assets/#image (8).png",}, {"title": "9   앙프", "map": '충청남도 천안시 동남구 천안천변길 139(신방동)', "images": "assets/#image (9).png",},
+    {"title": "10   청룡원조매운탕", "map": '충청남도 천안시 서북구 입장면 성진로 1406', "images": "assets/#image (10).png",}, {"title": "11   아우내한방순대", "map": '충청남도 천안시 동남구 병천면 아우내순대길 18', "images": "assets/#image (11).png",}, {"title": "12   대안식당", "map": '충청남도 천안시 서북구 도원7길 17(성정동)', "images": "assets/#image (12).png",}, {"title": "13   페어리우드베이커리", "map": '충청남도 천안시 동남구 천호지길 44(안서동)', "images": "assets/#image (13).png",}, {"title": "14   꽃분이네애견카페", "map": '충청남도 천안시 동남구 통정4로 22-25(신방동)', "images": "assets/#image (14).png",}, {"title": "15   더몰트하우스", "map": '충청남도 천안시 서북구 불당31길 22(불당동)', "images": "assets/#image (15).png",}, {"title": "16   천진", "map": '충청남도 천안시 동남구 공고담길 43-5', "images": "assets/#image (16).png",}, {"title": "17   들꽃", "map": '충청남도 천안시 동남구 호서대길 110', "images": "assets/#image (17).png",}, {"title": "18   충남집순대", "map": '충청남도 천안시 동남구 병천면 충절로 1748', "images": "assets/#image (18).png",}, {"title": "19   진성석갈비", "map": '충청남도 천안시 동남구 목천읍 충절로 1166', "images": "assets/#image (19).png",},
+    {"title": "20   석산장", "map": '충청남도 천안시 동남구 문화로 30(문화동)', "images": "assets/#image (20).png",}, {"title": "21   밥상차려주는집", "map": '충청남도 천안시 동남구 풍세로 702(구룡동)', "images": "assets/#image (21).png",}, {"title": "22   이화갈비", "map": '충청남도 천안시 서북구 불당29길 18(불당동)', "images": "assets/#image (22).png",}, {"title": "23   명동보리밥", "map": '충청남도 천안시 서북구 미라7길 17', "images": "assets/#image (23).png",}, {"title": "24   천안 등촌샤브칼국수", "map": '충청남도 천안시 서북구 두정로 132(두정동)', "images": "assets/#image (24).png",}, {"title": "25   기린더매운갈비찜", "map": '충청남도 천안시 서북구 불당16길 34-6', "images": "assets/#image (25).png",}, {"title": "26   카페시스터즈", "map": '충청남도 천안시 서북구 불당16길 1', "images": "assets/#image (26).png",}, {"title": "27   승지원", "map": '충청남도 천안시 서북구 노태산로 41(백석동)', "images": "assets/#image (27).png",}, {"title": "28   정초밥", "map": '충청남도 천안시 서북구 늘푸른6길 5-11(두정동)', "images": "assets/#image (28).png",}, {"title": "29   여물통", "map": '충청남도 천안시 서북구 봉정로 111', "images": "assets/#image (29).png",},
+    {"title": "30   청화집", "map": '충청남도 천안시 동남구 병천면 충절로 1749', "images": "assets/#image (30).png",},
   ];
+
+
   static List<String> mpimage = [
     'assets/#image (1).png', 'assets/#image (2).png', 'assets/#image (3).png', 'assets/#image (4).png', 'assets/#image (5).png', 'assets/#image (6).png', 'assets/#image (7).png', 'assets/#image (8).png', 'assets/#image (9).png',
     'assets/#image (10).png', 'assets/#image (11).png', 'assets/#image (12).png', 'assets/#image (13).png', 'assets/#image (14).png', 'assets/#image (15).png', 'assets/#image (16).png', 'assets/#image (17).png', 'assets/#image (18).png', 'assets/#image (19).png',
@@ -1877,8 +1933,8 @@ class FoodDetail extends StatelessWidget{
                       ),
                     ),
                     SizedBox(
-                        height: MediaQuery.of(context).size.height*0.05,
-                      ),
+                      height: MediaQuery.of(context).size.height*0.05,
+                    ),
                   ],
                 ),
                 Row(
@@ -1962,7 +2018,7 @@ class FoodDetail extends StatelessWidget{
       ),
     );
   }
-  //void setState(Null Function() param0) {}
+//void setState(Null Function() param0) {}
 }
 //2. 맛집 이미지 정보
 
@@ -2020,15 +2076,15 @@ class FoodDetail2 extends StatelessWidget{
                       width: MediaQuery.of(context).size.width*1,
                       fit: BoxFit.fill,
                     ),*/
-                      child: Container(
-                        height: MediaQuery.of(context).size.height*0.28,
-                        width: MediaQuery.of(context).size.width*1,
-                        child: Image.asset(
-                            foodDataModel2.mpimage,
-                            //width: MediaQuery.of(context).size.width*1,
-                            fit: BoxFit.cover,
-                          ),
+                    child: Container(
+                      height: MediaQuery.of(context).size.height*0.28,
+                      width: MediaQuery.of(context).size.width*1,
+                      child: Image.asset(
+                        foodDataModel2.mpimage,
+                        //width: MediaQuery.of(context).size.width*1,
+                        fit: BoxFit.cover,
                       ),
+                    ),
                   ),
                   //Text(foodDataModel2.mplocation),
                 ],
@@ -2494,93 +2550,93 @@ class FoodDetail2 extends StatelessWidget{
                         delegate: SliverChildBuilderDelegate(
                           childCount: Random().nextInt(5)+1,
                               (context, index) => Column(
+                            children: [
+                              SizedBox(
+                                height: MediaQuery.of(context).size.height*0.01,
+                              ),
+                              //NPIMAGE
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  SizedBox(
-                                    height: MediaQuery.of(context).size.height*0.01,
-                                  ),
-                                  //NPIMAGE
-                                  Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: InkWell(
-                                          child: ClipRRect(
-                                            borderRadius: BorderRadius.circular(10.0),
-                                            child: SizedBox(
-                                              width: 50,
-                                              height: 50,
-                                              child: Image.asset(reviewimage[index]),
-                                            ),
-                                          ),
-                                          /*onTap: (){
+                                  Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: InkWell(
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(10.0),
+                                        child: SizedBox(
+                                          width: 50,
+                                          height: 50,
+                                          child: Image.asset(reviewimage[index]),
+                                        ),
+                                      ),
+                                      /*onTap: (){
                                         Navigator.of(context).push(MaterialPageRoute(builder: (context)=>FoodDetail(foodDataModel: Nowdata[1],)));
                                       }*/
-                                        ),
-                                      ),
-                                      Flexible(
-                                        fit: FlexFit.tight,
-                                        child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(5,10,0,0),
-                                              child: Text(
-                                                reviewname[index],
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 13,
-                                                ),
-                                              ),
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(5,10,0,0),
-                                              child: Text(
-                                                reviewcontent[index],
-                                                style: TextStyle(
-                                                  fontWeight: FontWeight.bold,
-                                                  fontSize: 11,
-                                                ),
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                      Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(60,10,0,0),
-                                            child: Text(
-                                              '8m ago',
-                                              style: TextStyle(
-                                                color: Colors.grey,
-                                                fontSize: 10,
-                                              ),),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            /*child: Image.asset('assets/coolicon8.png'),*/
-                                            child: RatingBar.builder(
-                                              initialRating: Random().nextInt(5)+3.0,
-                                              minRating: 3,
-                                              itemSize: 20,
-                                              allowHalfRating: true,
-                                              itemBuilder: (context,_) => Icon(
-                                                Icons.star,
-                                                color: Colors.amber,
-                                              ),
-                                              onRatingUpdate: (rating){},
-                                            ),
-
-                                          ),
-                                        ],
-                                      )
-                                    ],
+                                    ),
                                   ),
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(5,10,0,0),
+                                          child: Text(
+                                            reviewname[index],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 13,
+                                            ),
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(5,10,0,0),
+                                          child: Text(
+                                            reviewcontent[index],
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 11,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(60,10,0,0),
+                                        child: Text(
+                                          '8m ago',
+                                          style: TextStyle(
+                                            color: Colors.grey,
+                                            fontSize: 10,
+                                          ),),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(8.0),
+                                        /*child: Image.asset('assets/coolicon8.png'),*/
+                                        child: RatingBar.builder(
+                                          initialRating: Random().nextInt(5)+3.0,
+                                          minRating: 3,
+                                          itemSize: 20,
+                                          allowHalfRating: true,
+                                          itemBuilder: (context,_) => Icon(
+                                            Icons.star,
+                                            color: Colors.amber,
+                                          ),
+                                          onRatingUpdate: (rating){},
+                                        ),
 
+                                      ),
+                                    ],
+                                  )
                                 ],
                               ),
+
+                            ],
+                          ),
                         )),
                     /*SliverList(
                         delegate: SliverChildBuilderDelegate(

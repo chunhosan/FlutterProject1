@@ -1,14 +1,14 @@
 import 'package:app1/login/login_screen.dart';
-import 'package:app1/menu/center_screen.dart';
+import 'package:app1/user/menu/center_screen.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:app1/menu/setting_screen.dart';
+import 'package:app1/user/menu/setting_screen.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'login/login_screen2.dart';
-import 'menu/faq.dart';
+import '../login/login_screen2.dart';
+import '../user/menu/faq.dart';
 
 class UserScreen extends StatefulWidget {
   @override
@@ -103,7 +103,7 @@ class _UserScreenState extends State<UserScreen> {
               },
               //trailing: Icon(Icons.add),
             ),
-            ListTile(
+            /*ListTile(
               leading: Icon(Icons.question_answer, color: Colors.grey[850]),
               title: Text('Q&A'),
               onTap: () {
@@ -112,7 +112,7 @@ class _UserScreenState extends State<UserScreen> {
                 );
               },
               //trailing: Icon(Icons.add),
-            ),
+            ),*/
             ListTile(
               leading: Icon(Icons.question_mark, color: Colors.grey[850]),
               title: Text('고객센터'),
@@ -139,7 +139,12 @@ class _UserScreenState extends State<UserScreen> {
       ),
       appBar: AppBar(
         iconTheme: IconThemeData(color: Colors.black),
-        title: Text('사용자',style: TextStyle(color: Colors.black,fontSize: 30),),
+        title: Text('USER',
+          style: TextStyle(
+            color: Colors.black,
+            //fontWeight: FontWeight.bold,
+            fontSize: 35,
+          ),),
         centerTitle: true,
         elevation: 0,
         // backgroundColor: Color(0xffB1B8C0),
